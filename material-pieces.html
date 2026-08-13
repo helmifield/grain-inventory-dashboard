@@ -4,367 +4,535 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Grain / Material Pieces</title>
+
 <style>
 :root{
- --bg:#f5f4f0;--paper:#faf9f6;--ink:#11110f;--muted:#77746d;
- --line:#d9d6ce;--line2:#e5e2da;--max:1480px;
+  --bg:#f5f4f0;
+  --paper:#faf9f6;
+  --ink:#11110f;
+  --muted:#77746d;
+  --line:#d9d6ce;
+  --line2:#e5e2da;
+  --max:1480px;
 }
-*{box-sizing:border-box}
-html,body{
- margin:0;
- min-height:100%;
- background:var(--bg);
- color:var(--ink);
- font-family:Inter,ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif
+
+*{
+  box-sizing:border-box;
 }
-body{letter-spacing:-.015em}
+
+html,
+body{
+  margin:0;
+  min-height:100%;
+  background:var(--bg);
+  color:var(--ink);
+  font-family:Inter,ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+}
+
+body{
+  letter-spacing:-.015em;
+}
+
 body:before{
- content:"";
- position:fixed;
- inset:0;
- pointer-events:none;
- z-index:0;
- opacity:.10;
- background-image:radial-gradient(#77746d .4px,transparent .4px);
- background-size:8px 8px
+  content:"";
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  z-index:0;
+  opacity:.10;
+  background-image:radial-gradient(#77746d .4px,transparent .4px);
+  background-size:8px 8px;
 }
-button,input{font:inherit}
-button{cursor:pointer}
-.app{min-height:100vh;position:relative;z-index:1}
+
+button,
+input,
+select{
+  font:inherit;
+}
+
+button{
+  cursor:pointer;
+}
+
+a{
+  color:inherit;
+  text-decoration:none;
+}
+
+.app{
+  min-height:100vh;
+  position:relative;
+  z-index:1;
+}
+
 .shell{
- width:min(calc(100% - 56px),var(--max));
- margin:auto;
- padding:26px 0 30px
+  width:min(calc(100% - 56px),var(--max));
+  margin:auto;
+  padding:26px 0 30px;
 }
+
+/* ---------------------------------------------------------
+   HEADER
+--------------------------------------------------------- */
+
 header{
- display:flex;
- align-items:center;
- justify-content:space-between;
- border-bottom:1px solid var(--line);
- padding-bottom:18px;
- margin-bottom:34px
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  border-bottom:1px solid var(--line);
+  padding-bottom:18px;
+  margin-bottom:34px;
 }
+
 .brand{
- font-size:15px;
- font-weight:650;
- letter-spacing:-.04em
+  font-size:15px;
+  font-weight:650;
+  letter-spacing:-.04em;
 }
+
 .brand span{
- color:var(--muted);
- font-weight:450
+  color:var(--muted);
+  font-weight:450;
 }
+
 .header-right{
- display:flex;
- gap:20px;
- color:var(--muted);
- font-size:10px;
- text-transform:uppercase;
- letter-spacing:.11em
-}
-.header-right a:hover{color:var(--ink)}
-.titlebar{
- display:flex;
- justify-content:space-between;
- gap:40px;
- align-items:flex-end;
- margin-bottom:36px
-}
-.kicker{
- font-size:10px;
- text-transform:uppercase;
- letter-spacing:.16em;
- color:var(--muted);
- margin-bottom:10px
-}
-h1{
- font-size:clamp(58px,7.3vw,112px);
- line-height:.94;
- letter-spacing:-.055em;
- font-weight:520;
- margin:0
-}
-.subtitle{
- max-width:470px;
- color:var(--muted);
- font-size:13px;
- line-height:1.55;
- margin:20px 0 0
-}
-.updated{
- text-align:right;
- color:var(--muted);
- font-size:10px;
- line-height:1.7
-}
-.updated b{
- color:var(--ink);
- font-weight:600
-}
-.viewbar{
- display:flex;
- align-items:center;
- gap:4px;
- border-top:1px solid var(--ink);
- border-bottom:1px solid var(--line);
- overflow:hidden;
- white-space:nowrap
-}
-.viewscroll{
- display:flex;
- gap:4px;
- overflow:auto;
- scrollbar-width:none;
- flex:1
-}
-.viewscroll::-webkit-scrollbar{display:none}
-.view{
- border:0;
- background:transparent;
- color:var(--muted);
- padding:12px 14px;
- font-size:11px;
- letter-spacing:-.01em;
- flex:0 0 auto;
- border-radius:999px;
- margin:5px 0
-}
-.view:hover{
- color:var(--ink);
- background:#eceae4
-}
-.view.active{
- background:var(--ink);
- color:#fff
-}
-.viewmore{
- border:0;
- background:var(--bg);
- color:var(--muted);
- font-size:10px;
- padding:12px 10px;
- flex:0 0 auto
-}
-.viewmore:hover{color:var(--ink)}
-.popover{
- display:none;
- position:absolute;
- right:0;
- top:42px;
- z-index:20;
- background:var(--paper);
- border:1px solid var(--line);
- box-shadow:0 16px 40px #11111112;
- padding:8px;
- width:250px;
- max-height:380px;
- overflow:auto
-}
-.morewrap{position:relative}
-.popover button{
- display:block;
- width:100%;
- text-align:left;
- background:transparent;
- border:0;
- padding:9px 10px;
- font-size:11px;
- color:var(--ink)
-}
-.popover button:hover{background:#eeece6}
-.morewrap.open .popover{display:block}
-.tools{
- display:flex;
- align-items:center;
- gap:10px;
- padding:14px 0;
- border-bottom:1px solid var(--line)
-}
-.search{
- width:360px;
- max-width:100%;
- border:1px solid var(--line);
- background:var(--paper);
- border-radius:999px;
- padding:10px 14px;
- font-size:11px;
- outline:none
-}
-.search:focus{border-color:#99958d}
-.filter-toggle{
- border:1px solid var(--line);
- background:transparent;
- border-radius:999px;
- padding:9px 13px;
- font-size:10px;
- color:var(--ink)
-}
-.filter-toggle.active{
- background:var(--ink);
- color:#fff;
- border-color:var(--ink)
-}
-.filter-panel{
- display:none;
- gap:10px;
- flex-wrap:wrap;
- padding:12px 0;
- border-bottom:1px solid var(--line)
-}
-.filter-panel.open{display:flex}
-.select{
- border:1px solid var(--line);
- background:var(--paper);
- border-radius:999px;
- padding:8px 11px;
- font-size:10px;
- outline:none
-}
-.meta{
- display:flex;
- justify-content:space-between;
- gap:20px;
- padding:13px 0;
- font-size:10px;
- color:var(--muted)
-}
-.tablewrap{
- overflow:auto;
- background:var(--paper);
- border-top:1px solid var(--line)
-}
-table{
- width:100%;
- min-width:1050px;
- border-collapse:collapse;
- table-layout:fixed
-}
-thead{
- position:sticky;
- top:0;
- z-index:4;
- background:#faf9f6ee;
- backdrop-filter:blur(8px)
-}
-th{
- height:38px;
- text-align:left;
- padding:0 13px;
- border-bottom:1px solid var(--ink);
- font-size:9px;
- font-weight:600;
- text-transform:uppercase;
- letter-spacing:.13em;
- color:var(--muted);
- white-space:nowrap;
- cursor:pointer
-}
-th:hover{color:var(--ink)}
-td{
- height:42px;
- padding:0 13px;
- border-bottom:1px solid var(--line2);
- font-size:11px;
- white-space:nowrap;
- overflow:hidden;
- text-overflow:ellipsis
-}
-tr:hover td{background:#f0eee8}
-.id{
- font-family:ui-monospace,SFMono-Regular,Menlo,monospace;
- font-size:10px;
- font-weight:600
-}
-.num{
- text-align:right;
- font-variant-numeric:tabular-nums;
- font-family:ui-monospace,SFMono-Regular,Menlo,monospace;
- font-size:10px
-}
-.pill{
- display:inline-block;
- border:1px solid var(--line);
- border-radius:999px;
- padding:4px 7px;
- font-size:9px;
- color:var(--muted)
-}
-.empty{
- padding:65px;
- text-align:center;
- color:var(--muted);
- font-size:12px
-}
-.viewfooter{
- display:flex;
- align-items:center;
- justify-content:space-between;
- gap:20px;
- border-top:1px solid var(--ink);
- padding:15px 0 0;
- margin-top:14px;
- font-size:10px;
- color:var(--muted)
-}
-.viewfooter strong{
- color:var(--ink);
- font-weight:650
-}
-.viewfooter .stats{
- display:flex;
- gap:28px
-}
-.cursor-dot,.cursor-ring{
- position:fixed;
- pointer-events:none;
- z-index:9999;
- transform:translate(-50%,-50%)
-}
-.cursor-dot{
- width:5px;
- height:5px;
- background:var(--ink);
- border-radius:50%
-}
-.cursor-ring{
- width:28px;
- height:28px;
- border:1px solid #1118;
- border-radius:50%;
- transition:.18s ease
-}
-body.pointer-hover .cursor-ring{
- width:44px;
- height:44px;
- background:#11108;
- border-color:var(--ink)
-}
-@media(max-width:850px){
- .shell{
-  width:calc(100% - 28px);
-  padding-top:18px
- }
- header{margin-bottom:42px}
- .header-right{display:none}
- .titlebar{
-  display:block;
-  margin-bottom:34px
- }
- .updated{
-  text-align:left;
-  margin-top:22px
- }
- .tools{display:block}
- .search{
-  width:100%;
-  margin-bottom:10px
- }
- .viewfooter{display:block}
- .viewfooter .stats{
-  margin-top:8px;
+  display:flex;
   gap:20px;
-  flex-wrap:wrap
- }
- .cursor-dot,.cursor-ring{display:none}
+  color:var(--muted);
+  font-size:10px;
+  text-transform:uppercase;
+  letter-spacing:.11em;
+}
+
+.header-right a:hover{
+  color:var(--ink);
+}
+
+/* ---------------------------------------------------------
+   HERO
+--------------------------------------------------------- */
+
+.titlebar{
+  display:flex;
+  justify-content:space-between;
+  gap:40px;
+  align-items:flex-end;
+  margin-bottom:36px;
+}
+
+.kicker{
+  font-size:10px;
+  text-transform:uppercase;
+  letter-spacing:.16em;
+  color:var(--muted);
+  margin-bottom:10px;
+}
+
+h1{
+  font-size:clamp(58px,7.3vw,112px);
+  line-height:.94;
+  letter-spacing:-.055em;
+  font-weight:520;
+  margin:0;
+}
+
+.subtitle{
+  max-width:470px;
+  color:var(--muted);
+  font-size:13px;
+  line-height:1.55;
+  margin:20px 0 0;
+}
+
+.updated{
+  text-align:right;
+  color:var(--muted);
+  font-size:10px;
+  line-height:1.7;
+}
+
+.updated b{
+  color:var(--ink);
+  font-weight:600;
+}
+
+/* ---------------------------------------------------------
+   VIEWS
+--------------------------------------------------------- */
+
+.viewbar{
+  display:flex;
+  align-items:center;
+  gap:4px;
+  border-top:1px solid var(--ink);
+  border-bottom:1px solid var(--line);
+  overflow:hidden;
+  white-space:nowrap;
+}
+
+.viewscroll{
+  display:flex;
+  gap:4px;
+  overflow:auto;
+  scrollbar-width:none;
+  flex:1;
+}
+
+.viewscroll::-webkit-scrollbar{
+  display:none;
+}
+
+.view{
+  border:0;
+  background:transparent;
+  color:var(--muted);
+  padding:12px 14px;
+  font-size:11px;
+  letter-spacing:-.01em;
+  flex:0 0 auto;
+  border-radius:999px;
+  margin:5px 0;
+}
+
+.view:hover{
+  color:var(--ink);
+  background:#eceae4;
+}
+
+.view.active{
+  background:var(--ink);
+  color:#fff;
+}
+
+.viewmore{
+  border:0;
+  background:var(--bg);
+  color:var(--muted);
+  font-size:10px;
+  padding:12px 10px;
+  flex:0 0 auto;
+}
+
+.viewmore:hover{
+  color:var(--ink);
+}
+
+.morewrap{
+  position:relative;
+}
+
+.popover{
+  display:none;
+  position:absolute;
+  right:0;
+  top:42px;
+  z-index:20;
+  background:var(--paper);
+  border:1px solid var(--line);
+  box-shadow:0 16px 40px #11111112;
+  padding:8px;
+  width:250px;
+  max-height:380px;
+  overflow:auto;
+}
+
+.morewrap.open .popover{
+  display:block;
+}
+
+.popover button{
+  display:block;
+  width:100%;
+  text-align:left;
+  background:transparent;
+  border:0;
+  padding:9px 10px;
+  font-size:11px;
+  color:var(--ink);
+}
+
+.popover button:hover{
+  background:#eeece6;
+}
+
+/* ---------------------------------------------------------
+   TOOLS
+--------------------------------------------------------- */
+
+.tools{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:14px 0;
+  border-bottom:1px solid var(--line);
+}
+
+.search{
+  width:360px;
+  max-width:100%;
+  border:1px solid var(--line);
+  background:var(--paper);
+  border-radius:999px;
+  padding:10px 14px;
+  font-size:11px;
+  outline:none;
+}
+
+.search:focus{
+  border-color:#99958d;
+}
+
+.filter-toggle{
+  border:1px solid var(--line);
+  background:transparent;
+  border-radius:999px;
+  padding:9px 13px;
+  font-size:10px;
+  color:var(--ink);
+}
+
+.filter-toggle:hover{
+  background:#eceae4;
+}
+
+.filter-toggle.active{
+  background:var(--ink);
+  color:#fff;
+  border-color:var(--ink);
+}
+
+.filter-panel{
+  display:none;
+  gap:10px;
+  flex-wrap:wrap;
+  padding:12px 0;
+  border-bottom:1px solid var(--line);
+}
+
+.filter-panel.open{
+  display:flex;
+}
+
+.select{
+  border:1px solid var(--line);
+  background:var(--paper);
+  border-radius:999px;
+  padding:8px 11px;
+  font-size:10px;
+  outline:none;
+}
+
+/* ---------------------------------------------------------
+   META
+--------------------------------------------------------- */
+
+.meta{
+  display:flex;
+  justify-content:space-between;
+  gap:20px;
+  padding:13px 0;
+  font-size:10px;
+  color:var(--muted);
+}
+
+/* ---------------------------------------------------------
+   TABLE
+--------------------------------------------------------- */
+
+.tablewrap{
+  overflow:auto;
+  background:var(--paper);
+  border-top:1px solid var(--line);
+}
+
+table{
+  width:100%;
+  min-width:1050px;
+  border-collapse:collapse;
+  table-layout:fixed;
+}
+
+thead{
+  position:sticky;
+  top:0;
+  z-index:4;
+  background:#faf9f6ee;
+  backdrop-filter:blur(8px);
+}
+
+th{
+  height:38px;
+  text-align:left;
+  padding:0 13px;
+  border-bottom:1px solid var(--ink);
+  font-size:9px;
+  font-weight:600;
+  text-transform:uppercase;
+  letter-spacing:.13em;
+  color:var(--muted);
+  white-space:nowrap;
+  cursor:pointer;
+}
+
+th:hover{
+  color:var(--ink);
+}
+
+td{
+  height:42px;
+  padding:0 13px;
+  border-bottom:1px solid var(--line2);
+  font-size:11px;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+tr:hover td{
+  background:#f0eee8;
+}
+
+.id{
+  font-family:ui-monospace,SFMono-Regular,Menlo,monospace;
+  font-size:10px;
+  font-weight:600;
+}
+
+.num{
+  text-align:right;
+  font-variant-numeric:tabular-nums;
+  font-family:ui-monospace,SFMono-Regular,Menlo,monospace;
+  font-size:10px;
+}
+
+.pill{
+  display:inline-block;
+  border:1px solid var(--line);
+  border-radius:999px;
+  padding:4px 7px;
+  font-size:9px;
+  color:var(--muted);
+}
+
+.empty{
+  padding:65px;
+  text-align:center;
+  color:var(--muted);
+  font-size:12px;
+}
+
+/* ---------------------------------------------------------
+   FOOTER
+--------------------------------------------------------- */
+
+.viewfooter{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:20px;
+  border-top:1px solid var(--ink);
+  padding:15px 0 0;
+  margin-top:14px;
+  font-size:10px;
+  color:var(--muted);
+}
+
+.viewfooter strong{
+  color:var(--ink);
+  font-weight:650;
+}
+
+.viewfooter .stats{
+  display:flex;
+  gap:28px;
+}
+
+/* ---------------------------------------------------------
+   GRAIN CURSOR
+--------------------------------------------------------- */
+
+.cursor-dot,
+.cursor-ring{
+  position:fixed;
+  pointer-events:none;
+  z-index:9999;
+  transform:translate(-50%,-50%);
+}
+
+.cursor-dot{
+  width:5px;
+  height:5px;
+  background:var(--ink);
+  border-radius:50%;
+}
+
+.cursor-ring{
+  width:28px;
+  height:28px;
+  border:1px solid #1118;
+  border-radius:50%;
+  transition:.18s ease;
+}
+
+body.pointer-hover .cursor-ring{
+  width:44px;
+  height:44px;
+  background:#11108;
+  border-color:var(--ink);
+}
+
+/* ---------------------------------------------------------
+   RESPONSIVE
+--------------------------------------------------------- */
+
+@media(max-width:850px){
+
+  .shell{
+    width:calc(100% - 28px);
+    padding-top:18px;
+  }
+
+  header{
+    margin-bottom:42px;
+  }
+
+  .header-right{
+    display:none;
+  }
+
+  .titlebar{
+    display:block;
+    margin-bottom:34px;
+  }
+
+  .updated{
+    text-align:left;
+    margin-top:22px;
+  }
+
+  .tools{
+    display:block;
+  }
+
+  .search{
+    width:100%;
+    margin-bottom:10px;
+  }
+
+  .viewfooter{
+    display:block;
+  }
+
+  .viewfooter .stats{
+    margin-top:8px;
+    gap:20px;
+    flex-wrap:wrap;
+  }
+
+  .cursor-dot,
+  .cursor-ring{
+    display:none;
+  }
 }
 </style>
 </head>
@@ -372,1211 +540,1579 @@ body.pointer-hover .cursor-ring{
 <body>
 
 <div class="app">
+
 <div class="shell">
 
 <header>
- <div class="brand">
-  grain <span>/ material pieces</span>
- </div>
 
- <div class="header-right">
-  <a
-   href="https://grain-inventory-dashboard.pages.dev"
-   target="_blank"
-   rel="noopener"
-  >
-   inventory overview ↗
-  </a>
+  <div class="brand">
+    grain <span>/ material pieces</span>
+  </div>
 
-  <a
-   href="https://app.notion.com/p/3b2587ac8c7880c58f18cab26e5d7d14?v=3b2587ac8c7880a09c54000c3e883df6&source=copy_link"
-   target="_blank"
-   rel="noopener"
-  >
-   master database ↗
-  </a>
- </div>
+  <div class="header-right">
+
+    <a
+      href="https://grain-inventory-dashboard.pages.dev"
+      target="_blank"
+      rel="noopener"
+    >
+      inventory overview ↗
+    </a>
+
+    <a
+      href="https://app.notion.com/p/3b2587ac8c7880c58f18cab26e5d7d14?v=3b2587ac8c7880a09c54000c3e883df6&source=copy_link"
+      target="_blank"
+      rel="noopener"
+    >
+      master database ↗
+    </a>
+
+  </div>
+
 </header>
+
 
 <section class="titlebar">
 
- <div>
+  <div>
 
-  <div class="kicker">
-   Wright / Material Pieces / 13.08.26
+    <div class="kicker">
+      Wright / Material Pieces / 13.08.26
+    </div>
+
+    <h1>
+      material<br>
+      pieces.
+    </h1>
+
+    <p class="subtitle">
+      Piece-level inventory records with material views,
+      dimensions and grade. Built from the latest master data.
+    </p>
+
   </div>
 
-  <h1>
-   material<br>
-   pieces.
-  </h1>
+  <div class="updated">
 
-  <p class="subtitle">
-   Piece-level inventory records with material views,
-   dimensions and grade. Built from the latest master data.
-  </p>
+    LAST DATA UPDATE<br>
 
- </div>
+    <b>
+      13 Aug 2026 · 12:00
+    </b>
 
- <div class="updated">
-  LAST DATA UPDATE<br>
-  <b>13 Aug 2026 · 12:00</b><br>
-  Length ≥ 1,000 mm
- </div>
+    <br>
+
+    Length ≥ 1,000 mm
+
+  </div>
 
 </section>
 
+
+<!-- ======================================================
+     MATERIAL VIEWS
+======================================================= -->
+
 <div class="viewbar">
 
- <div
-  class="viewscroll"
-  id="viewscroll"
- ></div>
-
- <div
-  class="morewrap"
-  id="morewrap"
- >
-
-  <button
-   class="viewmore"
-   id="morebtn"
-  >
-   more…
-  </button>
-
   <div
-   class="popover"
-   id="popover"
+    class="viewscroll"
+    id="viewscroll"
   ></div>
 
- </div>
+  <div
+    class="morewrap"
+    id="morewrap"
+  >
+
+    <button
+      class="viewmore"
+      id="morebtn"
+    >
+      more…
+    </button>
+
+    <div
+      class="popover"
+      id="popover"
+    ></div>
+
+  </div>
 
 </div>
+
+
+<!-- ======================================================
+     SEARCH + FILTER
+======================================================= -->
 
 <div class="tools">
 
- <input
-  id="search"
-  class="search"
-  placeholder="Search piece ID, grade, rack…"
- >
+  <input
+    id="search"
+    class="search"
+    placeholder="Search piece ID, grade, rack…"
+    autocomplete="off"
+  >
 
- <button
-  id="filterToggle"
-  class="filter-toggle"
- >
-  Filter
- </button>
+  <button
+    id="filterToggle"
+    class="filter-toggle"
+  >
+    Filter
+  </button>
 
 </div>
+
 
 <div
- class="filter-panel"
- id="filterPanel"
+  class="filter-panel"
+  id="filterPanel"
 >
 
- <select
-  id="gradeFilter"
-  class="select"
- >
-  <option value="">All grades</option>
-  <option>AAA</option>
-  <option>B Grade</option>
-  <option>Doreng</option>
- </select>
+  <select
+    id="gradeFilter"
+    class="select"
+  >
+    <option value="">
+      All grades
+    </option>
 
- <select
-  id="rackFilter"
-  class="select"
- >
-  <option value="">All racks</option>
- </select>
+    <option value="AAA">
+      AAA
+    </option>
 
- <select
-  id="statusFilter"
-  class="select"
- >
-  <option value="">All status</option>
- </select>
+    <option value="B Grade">
+      B Grade
+    </option>
 
- <button
-  id="clearFilter"
-  class="filter-toggle"
- >
-  Clear
- </button>
+    <option value="Doreng">
+      Doreng
+    </option>
+
+    <option value="Other">
+      Other
+    </option>
+
+  </select>
+
+
+  <select
+    id="rackFilter"
+    class="select"
+  >
+
+    <option value="">
+      All racks
+    </option>
+
+  </select>
+
+
+  <select
+    id="statusFilter"
+    class="select"
+  >
+
+    <option value="">
+      All status
+    </option>
+
+  </select>
+
+
+  <button
+    id="clearFilter"
+    class="filter-toggle"
+  >
+    Clear
+  </button>
 
 </div>
+
+
+<!-- ======================================================
+     META
+======================================================= -->
 
 <div class="meta">
 
- <span id="meta">
-  —
- </span>
+  <span id="meta">
+    Loading inventory…
+  </span>
 
- <span>
-  Click a column heading to sort
- </span>
+  <span>
+    Click a column heading to sort
+  </span>
 
 </div>
+
+
+<!-- ======================================================
+     TABLE
+======================================================= -->
 
 <div class="tablewrap">
 
- <table>
+  <table>
 
-  <thead>
+    <thead>
 
-   <tr>
+      <tr>
 
-    <th data-key="piece_id">
-     Aa&nbsp;&nbsp; Piece ID
-    </th>
+        <th data-key="piece_id">
+          Aa&nbsp;&nbsp; Piece ID
+        </th>
 
-    <th data-key="thickness">
-     #&nbsp;&nbsp; Thickness (mm)
-    </th>
+        <th data-key="thickness">
+          #&nbsp;&nbsp; Thickness (mm)
+        </th>
 
-    <th data-key="width">
-     #&nbsp;&nbsp; Width (mm)
-    </th>
+        <th data-key="width">
+          #&nbsp;&nbsp; Width (mm)
+        </th>
 
-    <th data-key="length">
-     #&nbsp;&nbsp; Length (mm)
-    </th>
+        <th data-key="length">
+          #&nbsp;&nbsp; Length (mm)
+        </th>
 
-    <th data-key="grade">
-     ◉&nbsp;&nbsp; Grade
-    </th>
+        <th data-key="grade">
+          ◉&nbsp;&nbsp; Grade
+        </th>
 
-    <th
-     data-key="qty"
-     class="num"
-    >
-     Qty
-    </th>
+        <th
+          data-key="qty"
+          class="num"
+        >
+          Qty
+        </th>
 
-    <th data-key="rack">
-     Rack
-    </th>
+        <th data-key="rack">
+          Rack
+        </th>
 
-    <th data-key="status">
-     Status
-    </th>
+        <th data-key="status">
+          Status
+        </th>
 
-   </tr>
+      </tr>
 
-  </thead>
+    </thead>
 
-  <tbody id="tbody"></tbody>
+    <tbody id="tbody"></tbody>
 
- </table>
+  </table>
 
- <div
-  id="empty"
-  class="empty"
-  style="display:none"
- >
-  No pieces match this view.
- </div>
+
+  <div
+    id="empty"
+    class="empty"
+    style="display:none"
+  >
+    No pieces match this view.
+  </div>
 
 </div>
+
+
+<!-- ======================================================
+     VIEW FOOTER
+======================================================= -->
 
 <div class="viewfooter">
 
- <span id="viewname">
-  Master
- </span>
-
- <div class="stats">
-
-  <span>
-   <strong id="footPcs">—</strong>
-   pcs
+  <span id="viewname">
+    Master
   </span>
 
-  <span>
-   <strong id="footCbm">—</strong>
-   CBM
-  </span>
+  <div class="stats">
 
-  <span>
-   <strong id="footLines">—</strong>
-   lines
-  </span>
+    <span>
+      <strong id="footPcs">—</strong>
+      pcs
+    </span>
 
- </div>
+    <span>
+      <strong id="footCbm">—</strong>
+      CBM
+    </span>
+
+    <span>
+      <strong id="footLines">—</strong>
+      lines
+    </span>
+
+  </div>
 
 </div>
 
 </div>
 </div>
+
+
+<!-- ======================================================
+     GRAIN CURSOR
+======================================================= -->
 
 <div
- class="cursor-dot"
- id="cursorDot"
+  class="cursor-dot"
+  id="cursorDot"
 ></div>
 
 <div
- class="cursor-ring"
- id="cursorRing"
+  class="cursor-ring"
+  id="cursorRing"
 ></div>
 
 
-<!--
-============================================================
-GRAIN MATERIAL DATA
-============================================================
-The actual inventory data remains in:
+<!-- ======================================================
+     DATA SOURCE
+=======================================================
 
-material-pieces-data.js
+     IMPORTANT:
+     This file must remain in the same directory:
 
-Do NOT paste the data into this HTML file.
-============================================================
--->
+     material-pieces-data.js
 
-<script src="material-pieces-data.js"></script>
+======================================================= -->
+
+<script src="./material-pieces-data.js"></script>
+
 
 <script>
 
-async function initGrainMaterialPieces(){
-
- /*
- ============================================================
- LOAD COMPRESSED INVENTORY DATA
- ============================================================
- */
-
- const encoded =
-  window.__GRAIN_DATA_GZIP__;
-
- if(!encoded){
-
-  throw new Error(
-   "Inventory data was not loaded."
-  );
-
- }
-
- if(!("DecompressionStream" in window)){
-
-  throw new Error(
-   "This browser does not support native gzip decompression."
-  );
-
- }
-
- const compressed =
-  Uint8Array.from(
-   atob(encoded),
-   c => c.charCodeAt(0)
-  );
-
- const stream =
-  new DecompressionStream("gzip");
-
- const writer =
-  stream.writable.getWriter();
-
- await writer.write(compressed);
-
- await writer.close();
-
- const json =
-  await new Response(
-   stream.readable
-  ).text();
-
- const DATA =
-  JSON.parse(json);
-
-
- /*
- ============================================================
- HELPERS
- ============================================================
- */
-
- const esc =
-  s =>
-   String(s ?? "")
-    .replace(
-     /[&<>"']/g,
-     m => ({
-      "&":"&amp;",
-      "<":"&lt;",
-      ">":"&gt;",
-      '"':"&quot;",
-      "'":"&#39;"
-     }[m])
-    );
-
- const fmt =
-  n =>
-   Number(n || 0)
-    .toLocaleString("en-US");
-
- const alias =
-  v =>
-   DATA.aliases?.[v] || v;
-
-
- /*
- ============================================================
- DOM
- ============================================================
- */
-
- const scroll =
-  document.getElementById(
-   "viewscroll"
-  );
-
- const pop =
-  document.getElementById(
-   "popover"
-  );
-
- const search =
-  document.getElementById(
-   "search"
-  );
-
- const tbody =
-  document.getElementById(
-   "tbody"
-  );
-
- const empty =
-  document.getElementById(
-   "empty"
-  );
-
- const meta =
-  document.getElementById(
-   "meta"
-  );
-
- const footPcs =
-  document.getElementById(
-   "footPcs"
-  );
-
- const footCbm =
-  document.getElementById(
-   "footCbm"
-  );
-
- const footLines =
-  document.getElementById(
-   "footLines"
-  );
-
- const viewname =
-  document.getElementById(
-   "viewname"
-  );
-
- const gradeFilter =
-  document.getElementById(
-   "gradeFilter"
-  );
-
- const rackFilter =
-  document.getElementById(
-   "rackFilter"
-  );
-
- const statusFilter =
-  document.getElementById(
-   "statusFilter"
-  );
+(async function(){
 
-
- /*
- ============================================================
- STATE
- ============================================================
- */
+  try{
 
- let active =
-  "Master";
+    /* ====================================================
+       1. GET DATA STRING
+    ==================================================== */
 
- let sortKey =
-  null;
+    const raw =
+      window.__GRAIN_DATA_GZIP__;
 
- let sortDir =
-  1;
+    if(
+      typeof raw !== "string" ||
+      !raw.trim()
+    ){
 
+      throw new Error(
+        "material-pieces-data.js loaded, but __GRAIN_DATA_GZIP__ is missing."
+      );
 
- const rows =
-  Array.isArray(DATA.rows)
-   ? DATA.rows
-   : [];
+    }
 
- const views =
-  Array.isArray(DATA.views)
-   ? DATA.views
-   : ["Master"];
-
 
- /*
- ============================================================
- FILTER OPTIONS
- ============================================================
- */
-
- const racks =
-  [
-   ...new Set(
-    rows
-     .map(r => r.rack)
-     .filter(Boolean)
-   )
-  ].sort();
+    /* ====================================================
+       2. NORMALIZE BASE64
 
- const statuses =
-  [
-   ...new Set(
-    rows
-     .map(r => r.status)
-     .filter(Boolean)
-   )
-  ].sort();
+       This is the important fix.
 
+       Handles:
+       - whitespace
+       - line breaks
+       - URL-safe Base64
+       - missing padding
+       ==================================================== */
 
- racks.forEach(
-  value => {
+    let encoded =
+      raw
+        .trim()
+        .replace(/\s+/g,"")
+        .replace(/-/g,"+")
+        .replace(/_/g,"/");
 
-   const option =
-    document.createElement(
-     "option"
-    );
 
-   option.value =
-    value;
+    const remainder =
+      encoded.length % 4;
 
-   option.textContent =
-    value;
 
-   rackFilter.appendChild(
-    option
-   );
-
-  }
- );
-
+    if(remainder !== 0){
 
- statuses.forEach(
-  value => {
+      encoded +=
+        "=".repeat(
+          4 - remainder
+        );
 
-   const option =
-    document.createElement(
-     "option"
-    );
+    }
 
-   option.value =
-    value;
 
-   option.textContent =
-    value;
+    /* ====================================================
+       3. BASE64 → BYTES
+    ==================================================== */
 
-   statusFilter.appendChild(
-    option
-   );
+    let binary;
 
-  }
- );
+    try{
 
+      binary =
+        atob(encoded);
 
- /*
- ============================================================
- VIEW NAVIGATION
- ============================================================
- */
+    }catch(error){
 
- const mainViews =
-  views.slice(0,8);
+      throw new Error(
+        "Inventory data Base64 is invalid. Check material-pieces-data.js."
+      );
 
- const moreViews =
-  views.slice(8);
+    }
 
 
- function createViewButton(
-  value
- ){
-
-  const button =
-   document.createElement(
-    "button"
-   );
-
-  button.className =
-   "view" +
-   (
-    value === active
-     ? " active"
-     : ""
-   );
-
-  button.textContent =
-   alias(value);
-
-  button.onclick =
-   () =>
-    selectView(value);
-
-  return button;
-
- }
-
-
- function buildViews(){
-
-  scroll.innerHTML =
-   "";
-
-  mainViews.forEach(
-   value =>
-    scroll.appendChild(
-     createViewButton(
-      value
-     )
-    )
-  );
-
-  pop.innerHTML =
-   "";
-
-  moreViews.forEach(
-   value =>
-    pop.appendChild(
-     createViewButton(
-      value
-     )
-    )
-  );
-
-  document.getElementById(
-   "morebtn"
-  ).textContent =
-   moreViews.length
-    ? `${moreViews.length} more…`
-    : "";
-
- }
-
-
- function selectView(
-  value
- ){
-
-  active =
-   value;
-
-  sortKey =
-   null;
-
-  sortDir =
-   1;
-
-  search.value =
-   "";
-
-  clearFilters(
-   false
-  );
-
-  buildViews();
-
-  render();
-
-  window.scrollTo(
-   0,
-   0
-  );
-
- }
-
-
- /*
- ============================================================
- MORE MENU
- ============================================================
- */
-
- document.getElementById(
-  "morebtn"
- ).onclick =
-  () => {
-
-   document
-    .getElementById(
-     "morewrap"
-    )
-    .classList.toggle(
-     "open"
-    );
-
-  };
-
-
- document.addEventListener(
-  "click",
-  event => {
-
-   const more =
-    document.getElementById(
-     "morewrap"
-    );
-
-   if(
-    !more.contains(
-     event.target
-    )
-   ){
-
-    more.classList.remove(
-     "open"
-    );
-
-   }
-
-  }
- );
-
-
- /*
- ============================================================
- FILTERS
- ============================================================
- */
-
- function clearFilters(
-  renderNow = true
- ){
-
-  gradeFilter.value =
-   "";
-
-  rackFilter.value =
-   "";
-
-  statusFilter.value =
-   "";
-
-  if(renderNow){
-
-   render();
-
-  }
-
- }
-
-
- document.getElementById(
-  "filterToggle"
- ).onclick =
-  () => {
-
-   const panel =
-    document.getElementById(
-     "filterPanel"
-    );
-
-   panel.classList.toggle(
-    "open"
-   );
-
-   document
-    .getElementById(
-     "filterToggle"
-    )
-    .classList.toggle(
-     "active",
-     panel.classList.contains(
-      "open"
-     )
-    );
-
-  };
-
-
- document.getElementById(
-  "clearFilter"
- ).onclick =
-  () =>
-   clearFilters();
-
-
- search.addEventListener(
-  "input",
-  render
- );
-
-
- gradeFilter.addEventListener(
-  "change",
-  render
- );
-
-
- rackFilter.addEventListener(
-  "change",
-  render
- );
-
-
- statusFilter.addEventListener(
-  "change",
-  render
- );
-
-
- /*
- ============================================================
- TABLE RENDER
- ============================================================
- */
-
- function render(){
-
-  let visibleRows =
-   active === "Master"
-    ? rows
-    : rows.filter(
-       row =>
-        row.material ===
-        active
+    const compressed =
+      Uint8Array.from(
+        binary,
+        char => char.charCodeAt(0)
       );
 
 
-  const query =
-   search.value
-    .trim()
-    .toLowerCase();
+    /* ====================================================
+       4. GZIP → JSON
 
+       Native browser API.
+       No Pako dependency.
+       ==================================================== */
 
-  const grade =
-   gradeFilter.value;
+    if(
+      typeof DecompressionStream ===
+      "undefined"
+    ){
 
-
-  const rack =
-   rackFilter.value;
-
-
-  const status =
-   statusFilter.value;
-
-
-  visibleRows =
-   visibleRows.filter(
-    row => {
-
-     const searchable =
-      [
-       row.piece_id,
-       row.grade,
-       row.rack,
-       row.status
-      ]
-       .join(" ")
-       .toLowerCase();
-
-
-     return (
-      (!query ||
-       searchable.includes(
-        query
-       )) &&
-
-      (!grade ||
-       row.grade === grade) &&
-
-      (!rack ||
-       row.rack === rack) &&
-
-      (!status ||
-       row.status === status)
-     );
+      throw new Error(
+        "This browser does not support gzip decompression."
+      );
 
     }
-   );
 
 
-  /*
-  SORT
-  */
-
-  if(sortKey){
-
-   visibleRows =
-    [...visibleRows].sort(
-     (a,b) => {
-
-      const x =
-       a[sortKey];
-
-      const y =
-       b[sortKey];
+    const gzip =
+      new DecompressionStream(
+        "gzip"
+      );
 
 
-      if(
-       typeof x === "string" ||
-       typeof y === "string"
-      ){
-
-       return (
-        String(x ?? "")
-         .localeCompare(
-          String(y ?? "")
-         )
-       ) * sortDir;
-
-      }
+    const writer =
+      gzip.writable.getWriter();
 
 
-      return (
-       Number(x || 0) -
-       Number(y || 0)
-      ) * sortDir;
-
-     }
+    await writer.write(
+      compressed
     );
 
-  }
+
+    await writer.close();
 
 
-  /*
-  ============================================================
-  CALCULATE CURRENT VIEW TOTALS
-  ============================================================
-  */
-
-  const pcs =
-   visibleRows.reduce(
-    (total,row) =>
-     total +
-     Number(
-      row.qty || 0
-     ),
-    0
-   );
+    const json =
+      await new Response(
+        gzip.readable
+      ).text();
 
 
-  const cbm =
-   visibleRows.reduce(
-    (total,row) =>
-     total +
-     Number(
-      row.cbm || 0
-     ),
-    0
-   );
+    /* ====================================================
+       5. PARSE INVENTORY
+    ==================================================== */
+
+    const DATA =
+      JSON.parse(json);
 
 
-  /*
-  META
-  */
+    if(
+      !DATA ||
+      !Array.isArray(DATA.rows)
+    ){
 
-  meta.textContent =
-   `${fmt(visibleRows.length)} pieces shown · ${fmt(pcs)} pcs`;
+      throw new Error(
+        "Inventory data was decoded but has an invalid structure."
+      );
 
-
-  /*
-  FOOTER
-  */
-
-  viewname.textContent =
-   alias(active);
-
-  footPcs.textContent =
-   fmt(pcs);
-
-  footCbm.textContent =
-   cbm.toFixed(3);
-
-  footLines.textContent =
-   fmt(visibleRows.length);
+    }
 
 
-  /*
-  TABLE
-  */
+    /* ====================================================
+       HELPERS
+    ==================================================== */
 
-  tbody.innerHTML =
-   visibleRows
-    .map(
-     row => `
-      <tr>
+    const esc =
+      value =>
+        String(
+          value ?? ""
+        ).replace(
+          /[&<>"']/g,
+          char => ({
+            "&":"&amp;",
+            "<":"&lt;",
+            ">":"&gt;",
+            '"':"&quot;",
+            "'":"&#39;"
+          }[char])
+        );
 
-       <td class="id">
-        ${esc(row.piece_id)}
-       </td>
 
-       <td>
-        ${row.thickness ?? "—"}
-       </td>
+    const fmt =
+      value =>
+        Number(
+          value || 0
+        ).toLocaleString(
+          "en-US"
+        );
 
-       <td>
-        ${row.width ?? "—"}
-       </td>
 
-       <td>
-        ${row.length ?? "—"}
-       </td>
+    const alias =
+      value =>
+        DATA.aliases &&
+        DATA.aliases[value]
+          ? DATA.aliases[value]
+          : value;
 
-       <td>
-        ${
-         row.grade
-          ? `
-           <span class="pill">
-            ${esc(row.grade)}
-           </span>
-          `
-          : "—"
+
+    /* ====================================================
+       DOM
+    ==================================================== */
+
+    const viewscroll =
+      document.getElementById(
+        "viewscroll"
+      );
+
+    const popover =
+      document.getElementById(
+        "popover"
+      );
+
+    const search =
+      document.getElementById(
+        "search"
+      );
+
+    const tbody =
+      document.getElementById(
+        "tbody"
+      );
+
+    const empty =
+      document.getElementById(
+        "empty"
+      );
+
+    const meta =
+      document.getElementById(
+        "meta"
+      );
+
+    const viewname =
+      document.getElementById(
+        "viewname"
+      );
+
+    const footPcs =
+      document.getElementById(
+        "footPcs"
+      );
+
+    const footCbm =
+      document.getElementById(
+        "footCbm"
+      );
+
+    const footLines =
+      document.getElementById(
+        "footLines"
+      );
+
+    const gradeFilter =
+      document.getElementById(
+        "gradeFilter"
+      );
+
+    const rackFilter =
+      document.getElementById(
+        "rackFilter"
+      );
+
+    const statusFilter =
+      document.getElementById(
+        "statusFilter"
+      );
+
+
+    /* ====================================================
+       DATA
+    ==================================================== */
+
+    const rows =
+      DATA.rows;
+
+    const views =
+      Array.isArray(DATA.views)
+        ? DATA.views
+        : ["Master"];
+
+
+    /* ====================================================
+       STATE
+    ==================================================== */
+
+    let active =
+      "Master";
+
+    let sortKey =
+      null;
+
+    let sortDir =
+      1;
+
+
+    /* ====================================================
+       BUILD FILTER OPTIONS
+    ==================================================== */
+
+    const grades =
+      [
+        ...new Set(
+          rows
+            .map(
+              row => row.grade
+            )
+            .filter(Boolean)
+        )
+      ].sort();
+
+
+    const racks =
+      [
+        ...new Set(
+          rows
+            .map(
+              row => row.rack
+            )
+            .filter(Boolean)
+        )
+      ].sort();
+
+
+    const statuses =
+      [
+        ...new Set(
+          rows
+            .map(
+              row => row.status
+            )
+            .filter(Boolean)
+        )
+      ].sort();
+
+
+    /*
+      Add any grades not already hard-coded.
+    */
+
+    grades.forEach(
+      grade => {
+
+        const exists =
+          [...gradeFilter.options]
+            .some(
+              option =>
+                option.value === grade
+            );
+
+
+        if(!exists){
+
+          const option =
+            document.createElement(
+              "option"
+            );
+
+          option.value =
+            grade;
+
+          option.textContent =
+            grade;
+
+          gradeFilter.appendChild(
+            option
+          );
+
         }
-       </td>
-
-       <td class="num">
-        ${fmt(row.qty)}
-       </td>
-
-       <td>
-        ${
-         row.rack
-          ? esc(row.rack)
-          : "—"
-        }
-       </td>
-
-       <td>
-        ${
-         row.status
-          ? `
-           <span class="pill">
-            ${esc(row.status)}
-           </span>
-          `
-          : "—"
-        }
-       </td>
-
-      </tr>
-     `
-    )
-    .join("");
-
-
-  empty.style.display =
-   visibleRows.length
-    ? "none"
-    : "block";
-
- }
-
-
- /*
- ============================================================
- COLUMN SORTING
- ============================================================
- */
-
- document
-  .querySelectorAll(
-   "th[data-key]"
-  )
-  .forEach(
-   th => {
-
-    th.onclick =
-     () => {
-
-      const key =
-       th.dataset.key;
-
-
-      if(
-       sortKey === key
-      ){
-
-       sortDir *=
-        -1;
-
-      }else{
-
-       sortKey =
-        key;
-
-       sortDir =
-        1;
 
       }
+    );
 
+
+    racks.forEach(
+      rack => {
+
+        const option =
+          document.createElement(
+            "option"
+          );
+
+        option.value =
+          rack;
+
+        option.textContent =
+          rack;
+
+        rackFilter.appendChild(
+          option
+        );
+
+      }
+    );
+
+
+    statuses.forEach(
+      status => {
+
+        const option =
+          document.createElement(
+            "option"
+          );
+
+        option.value =
+          status;
+
+        option.textContent =
+          status;
+
+        statusFilter.appendChild(
+          option
+        );
+
+      }
+    );
+
+
+    /* ====================================================
+       VIEW BUTTON
+    ==================================================== */
+
+    function createViewButton(
+      value
+    ){
+
+      const button =
+        document.createElement(
+          "button"
+        );
+
+
+      button.className =
+        "view" +
+        (
+          value === active
+            ? " active"
+            : ""
+        );
+
+
+      button.textContent =
+        alias(value);
+
+
+      button.onclick =
+        () => {
+
+          selectView(
+            value
+          );
+
+        };
+
+
+      return button;
+
+    }
+
+
+    /* ====================================================
+       BUILD VIEWS
+    ==================================================== */
+
+    function buildViews(){
+
+      viewscroll.innerHTML =
+        "";
+
+      popover.innerHTML =
+        "";
+
+
+      const main =
+        views.slice(
+          0,
+          8
+        );
+
+
+      const more =
+        views.slice(
+          8
+        );
+
+
+      main.forEach(
+        value => {
+
+          viewscroll.appendChild(
+            createViewButton(
+              value
+            )
+          );
+
+        }
+      );
+
+
+      more.forEach(
+        value => {
+
+          popover.appendChild(
+            createViewButton(
+              value
+            )
+          );
+
+        }
+      );
+
+
+      const moreButton =
+        document.getElementById(
+          "morebtn"
+        );
+
+
+      moreButton.textContent =
+        more.length
+          ? `${more.length} more…`
+          : "";
+
+    }
+
+
+    /* ====================================================
+       SELECT VIEW
+    ==================================================== */
+
+    function selectView(
+      value
+    ){
+
+      active =
+        value;
+
+      sortKey =
+        null;
+
+      sortDir =
+        1;
+
+      search.value =
+        "";
+
+      clearFilters(
+        false
+      );
+
+      buildViews();
 
       render();
 
-     };
+      window.scrollTo(
+        0,
+        0
+      );
 
-   }
-  );
-
-
- /*
- ============================================================
- GRAIN CURSOR
- ============================================================
- */
-
- const cursorDot =
-  document.getElementById(
-   "cursorDot"
-  );
-
- const cursorRing =
-  document.getElementById(
-   "cursorRing"
-  );
+    }
 
 
- let mouseX =
-  0;
+    /* ====================================================
+       MORE MENU
+    ==================================================== */
 
- let mouseY =
-  0;
+    document
+      .getElementById(
+        "morebtn"
+      )
+      .addEventListener(
+        "click",
+        function(){
 
- let ringX =
-  0;
+          document
+            .getElementById(
+              "morewrap"
+            )
+            .classList.toggle(
+              "open"
+            );
 
- let ringY =
-  0;
-
-
- window.addEventListener(
-  "pointermove",
-  event => {
-
-   mouseX =
-    event.clientX;
-
-   mouseY =
-    event.clientY;
-
-
-   cursorDot.style.left =
-    mouseX + "px";
-
-   cursorDot.style.top =
-    mouseY + "px";
+        }
+      );
 
 
-   document.body.classList.toggle(
-    "pointer-hover",
-    Boolean(
-     event.target.closest(
-      "button,input,th,a"
-     )
-    )
-   );
+    document.addEventListener(
+      "click",
+      function(event){
 
-  }
- );
+        const menu =
+          document.getElementById(
+            "morewrap"
+          );
 
 
- function cursorLoop(){
+        if(
+          !menu.contains(
+            event.target
+          )
+        ){
 
-  ringX +=
-   (
-    mouseX -
-    ringX
-   ) * 0.16;
+          menu.classList.remove(
+            "open"
+          );
 
-  ringY +=
-   (
-    mouseY -
-    ringY
-   ) * 0.16;
+        }
 
-
-  cursorRing.style.left =
-   ringX + "px";
-
-  cursorRing.style.top =
-   ringY + "px";
-
-
-  requestAnimationFrame(
-   cursorLoop
-  );
-
- }
-
-
- /*
- START CURSOR
- */
-
- cursorLoop();
-
-
- /*
- INITIAL RENDER
- */
-
- buildViews();
-
- render();
-
-}
-
-
-/*
-============================================================
-START APPLICATION
-============================================================
-*/
-
-initGrainMaterialPieces()
- .catch(
-  error => {
-
-   console.error(
-    "Grain Material Pieces:",
-    error
-   );
-
-
-   const meta =
-    document.getElementById(
-     "meta"
-    );
-
-   const empty =
-    document.getElementById(
-     "empty"
+      }
     );
 
 
-   if(meta){
+    /* ====================================================
+       FILTERS
+    ==================================================== */
+
+    function clearFilters(
+      renderNow = true
+    ){
+
+      gradeFilter.value =
+        "";
+
+      rackFilter.value =
+        "";
+
+      statusFilter.value =
+        "";
+
+
+      if(renderNow){
+
+        render();
+
+      }
+
+    }
+
+
+    document
+      .getElementById(
+        "filterToggle"
+      )
+      .addEventListener(
+        "click",
+        function(){
+
+          const panel =
+            document.getElementById(
+              "filterPanel"
+            );
+
+
+          panel.classList.toggle(
+            "open"
+          );
+
+
+          this.classList.toggle(
+            "active",
+            panel.classList.contains(
+              "open"
+            )
+          );
+
+        }
+      );
+
+
+    document
+      .getElementById(
+        "clearFilter"
+      )
+      .addEventListener(
+        "click",
+        function(){
+
+          clearFilters();
+
+        }
+      );
+
+
+    search.addEventListener(
+      "input",
+      render
+    );
+
+
+    gradeFilter.addEventListener(
+      "change",
+      render
+    );
+
+
+    rackFilter.addEventListener(
+      "change",
+      render
+    );
+
+
+    statusFilter.addEventListener(
+      "change",
+      render
+    );
+
+
+    /* ====================================================
+       RENDER TABLE
+    ==================================================== */
+
+    function render(){
+
+      let visibleRows;
+
+
+      /*
+        Material view
+      */
+
+      if(
+        active === "Master"
+      ){
+
+        visibleRows =
+          rows.slice();
+
+      }else{
+
+        visibleRows =
+          rows.filter(
+            row =>
+              row.material ===
+              active
+          );
+
+      }
+
+
+      /* --------------------------------------------------
+         SEARCH
+      -------------------------------------------------- */
+
+      const query =
+        search.value
+          .trim()
+          .toLowerCase();
+
+
+      const selectedGrade =
+        gradeFilter.value;
+
+
+      const selectedRack =
+        rackFilter.value;
+
+
+      const selectedStatus =
+        statusFilter.value;
+
+
+      visibleRows =
+        visibleRows.filter(
+          row => {
+
+            const text =
+              [
+                row.piece_id,
+                row.grade,
+                row.rack,
+                row.status
+              ]
+                .join(" ")
+                .toLowerCase();
+
+
+            return (
+
+              (
+                !query ||
+                text.includes(
+                  query
+                )
+              )
+
+              &&
+
+              (
+                !selectedGrade ||
+                row.grade ===
+                selectedGrade
+              )
+
+              &&
+
+              (
+                !selectedRack ||
+                row.rack ===
+                selectedRack
+              )
+
+              &&
+
+              (
+                !selectedStatus ||
+                row.status ===
+                selectedStatus
+              )
+
+            );
+
+          }
+        );
+
+
+      /* --------------------------------------------------
+         SORT
+      -------------------------------------------------- */
+
+      if(sortKey){
+
+        visibleRows =
+          [...visibleRows].sort(
+            function(a,b){
+
+              const x =
+                a[sortKey];
+
+              const y =
+                b[sortKey];
+
+
+              if(
+                typeof x ===
+                "string" ||
+                typeof y ===
+                "string"
+              ){
+
+                return (
+                  String(
+                    x ?? ""
+                  ).localeCompare(
+                    String(
+                      y ?? ""
+                    )
+                  )
+                ) * sortDir;
+
+              }
+
+
+              return (
+                Number(
+                  x || 0
+                ) -
+                Number(
+                  y || 0
+                )
+              ) * sortDir;
+
+            }
+          );
+
+      }
+
+
+      /* --------------------------------------------------
+         CURRENT TOTALS
+      -------------------------------------------------- */
+
+      const pcs =
+        visibleRows.reduce(
+          (
+            total,
+            row
+          ) =>
+            total +
+            Number(
+              row.qty || 0
+            ),
+          0
+        );
+
+
+      /*
+        Use stored CBM when available.
+        If not available, calculate from physical
+        dimensions.
+      */
+
+      const cbm =
+        visibleRows.reduce(
+          (
+            total,
+            row
+          ) => {
+
+            const existing =
+              Number(
+                row.cbm
+              );
+
+
+            if(
+              Number.isFinite(
+                existing
+              )
+            ){
+
+              return total +
+                existing;
+
+            }
+
+
+            const thickness =
+              Number(
+                row.thickness || 0
+              );
+
+            const width =
+              Number(
+                row.width || 0
+              );
+
+            const length =
+              Number(
+                row.length || 0
+              );
+
+            const qty =
+              Number(
+                row.qty || 0
+              );
+
+
+            return total +
+              (
+                thickness *
+                width *
+                length *
+                qty
+              ) /
+              1000000000;
+
+          },
+          0
+        );
+
+
+      /* --------------------------------------------------
+         META
+      -------------------------------------------------- */
+
+      meta.textContent =
+        `${fmt(visibleRows.length)} pieces shown · ${fmt(pcs)} pcs`;
+
+
+      /* --------------------------------------------------
+         FOOTER
+      -------------------------------------------------- */
+
+      viewname.textContent =
+        alias(active);
+
+
+      footPcs.textContent =
+        fmt(pcs);
+
+
+      footCbm.textContent =
+        cbm.toFixed(3);
+
+
+      footLines.textContent =
+        fmt(visibleRows.length);
+
+
+      /* --------------------------------------------------
+         TABLE HTML
+      -------------------------------------------------- */
+
+      tbody.innerHTML =
+        visibleRows
+          .map(
+            row => `
+
+              <tr>
+
+                <td class="id">
+                  ${esc(
+                    row.piece_id
+                  )}
+                </td>
+
+                <td>
+                  ${row.thickness ?? "—"}
+                </td>
+
+                <td>
+                  ${row.width ?? "—"}
+                </td>
+
+                <td>
+                  ${row.length ?? "—"}
+                </td>
+
+                <td>
+                  ${
+                    row.grade
+                      ? `
+                        <span class="pill">
+                          ${esc(
+                            row.grade
+                          )}
+                        </span>
+                      `
+                      : "—"
+                  }
+                </td>
+
+                <td class="num">
+                  ${fmt(
+                    row.qty
+                  )}
+                </td>
+
+                <td>
+                  ${
+                    row.rack
+                      ? esc(
+                          row.rack
+                        )
+                      : "—"
+                  }
+                </td>
+
+                <td>
+                  ${
+                    row.status
+                      ? `
+                        <span class="pill">
+                          ${esc(
+                            row.status
+                          )}
+                        </span>
+                      `
+                      : "—"
+                  }
+                </td>
+
+              </tr>
+
+            `
+          )
+          .join("");
+
+
+      empty.style.display =
+        visibleRows.length
+          ? "none"
+          : "block";
+
+
+    }
+
+
+    /* ====================================================
+       COLUMN SORTING
+    ==================================================== */
+
+    document
+      .querySelectorAll(
+        "th[data-key]"
+      )
+      .forEach(
+        th => {
+
+          th.addEventListener(
+            "click",
+            function(){
+
+              const key =
+                this.dataset.key;
+
+
+              if(
+                sortKey === key
+              ){
+
+                sortDir *=
+                  -1;
+
+              }else{
+
+                sortKey =
+                  key;
+
+                sortDir =
+                  1;
+
+              }
+
+
+              render();
+
+            }
+          );
+
+        }
+      );
+
+
+    /* ====================================================
+       GRAIN CURSOR
+    ==================================================== */
+
+    const cursorDot =
+      document.getElementById(
+        "cursorDot"
+      );
+
+    const cursorRing =
+      document.getElementById(
+        "cursorRing"
+      );
+
+
+    let mouseX =
+      0;
+
+    let mouseY =
+      0;
+
+    let ringX =
+      0;
+
+    let ringY =
+      0;
+
+
+    window.addEventListener(
+      "pointermove",
+      function(event){
+
+        mouseX =
+          event.clientX;
+
+        mouseY =
+          event.clientY;
+
+
+        cursorDot.style.left =
+          mouseX + "px";
+
+        cursorDot.style.top =
+          mouseY + "px";
+
+
+        document.body.classList.toggle(
+          "pointer-hover",
+          Boolean(
+            event.target.closest(
+              "button,input,th,a"
+            )
+          )
+        );
+
+      }
+    );
+
+
+    function cursorLoop(){
+
+      ringX +=
+        (
+          mouseX -
+          ringX
+        ) * .16;
+
+
+      ringY +=
+        (
+          mouseY -
+          ringY
+        ) * .16;
+
+
+      cursorRing.style.left =
+        ringX + "px";
+
+      cursorRing.style.top =
+        ringY + "px";
+
+
+      requestAnimationFrame(
+        cursorLoop
+      );
+
+    }
+
+
+    /* ====================================================
+       START
+    ==================================================== */
+
+    buildViews();
+
+    render();
+
+    cursorLoop();
+
+
+  }catch(error){
+
+    console.error(
+      "Grain Material Pieces:",
+      error
+    );
+
+
+    const meta =
+      document.getElementById(
+        "meta"
+      );
+
+    const empty =
+      document.getElementById(
+        "empty"
+      );
+
 
     meta.textContent =
-     "Unable to load inventory data.";
+      "Unable to load inventory data.";
 
-   }
-
-
-   if(empty){
 
     empty.style.display =
-     "block";
+      "block";
+
 
     empty.textContent =
-     error.message;
-
-   }
+      error.message;
 
   }
- );
+
+})();
 
 </script>
 
