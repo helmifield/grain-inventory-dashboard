@@ -49,9 +49,41 @@ body.pointer-hover .cursor-ring{width:46px;height:46px;background:#11108;border-
 #valuationRows .row{width:100%;min-width:0}
 #valuationRows .mono{white-space:nowrap}
 
-.db-button{display:inline-flex;align-items:center;gap:8px;padding:9px 13px;border:1px solid #111;border-radius:999px;background:#111;color:#fff!important;font:10px "DM Mono",monospace;text-transform:uppercase;letter-spacing:.08em;transition:transform .18s ease,background .18s ease,color .18s ease}
-.db-button:hover{background:transparent;color:#111!important;transform:translateY(-1px)}
-.db-button span{font-size:12px;line-height:1}
+.db-button{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+
+  padding:9px 13px;
+
+  border:1px solid #2F7D5B;
+  border-radius:999px;
+
+  background:#2F7D5B;
+  color:#fff!important;
+
+  font:10px "DM Mono",monospace;
+  text-transform:uppercase;
+  letter-spacing:.08em;
+
+  transition:
+    transform .18s ease,
+    background .18s ease,
+    border-color .18s ease;
+}
+
+.db-button:hover{
+  background:#286D4F;
+  border-color:#286D4F;
+  color:#fff!important;
+
+  transform:translateY(-1px);
+}
+
+.db-button span{
+  font-size:12px;
+  line-height:1;
+}
 </style>
 </head>
 <body>
