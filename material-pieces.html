@@ -16,12 +16,9 @@
   --max:1480px;
 }
 
-*{
-  box-sizing:border-box;
-}
+*{box-sizing:border-box}
 
-html,
-body{
+html,body{
   margin:0;
   min-height:100%;
   background:var(--bg);
@@ -44,9 +41,7 @@ body:before{
   background-size:8px 8px;
 }
 
-button,
-input,
-select{
+button,input,select{
   font:inherit;
 }
 
@@ -71,9 +66,7 @@ a{
   padding:26px 0 30px;
 }
 
-/* ---------------------------------------------------------
-   HEADER
---------------------------------------------------------- */
+/* HEADER */
 
 header{
   display:flex;
@@ -108,9 +101,7 @@ header{
   color:var(--ink);
 }
 
-/* ---------------------------------------------------------
-   HERO
---------------------------------------------------------- */
+/* HERO */
 
 .titlebar{
   display:flex;
@@ -156,9 +147,7 @@ h1{
   font-weight:600;
 }
 
-/* ---------------------------------------------------------
-   VIEWS
---------------------------------------------------------- */
+/* VIEWS */
 
 .viewbar{
   display:flex;
@@ -255,9 +244,7 @@ h1{
   background:#eeece6;
 }
 
-/* ---------------------------------------------------------
-   TOOLS
---------------------------------------------------------- */
+/* TOOLS */
 
 .tools{
   display:flex;
@@ -322,9 +309,7 @@ h1{
   outline:none;
 }
 
-/* ---------------------------------------------------------
-   META
---------------------------------------------------------- */
+/* META */
 
 .meta{
   display:flex;
@@ -335,9 +320,7 @@ h1{
   color:var(--muted);
 }
 
-/* ---------------------------------------------------------
-   TABLE
---------------------------------------------------------- */
+/* TABLE */
 
 .tablewrap{
   overflow:auto;
@@ -421,9 +404,7 @@ tr:hover td{
   font-size:12px;
 }
 
-/* ---------------------------------------------------------
-   FOOTER
---------------------------------------------------------- */
+/* FOOTER */
 
 .viewfooter{
   display:flex;
@@ -447,9 +428,7 @@ tr:hover td{
   gap:28px;
 }
 
-/* ---------------------------------------------------------
-   GRAIN CURSOR
---------------------------------------------------------- */
+/* CURSOR */
 
 .cursor-dot,
 .cursor-ring{
@@ -481,9 +460,7 @@ body.pointer-hover .cursor-ring{
   border-color:var(--ink);
 }
 
-/* ---------------------------------------------------------
-   RESPONSIVE
---------------------------------------------------------- */
+/* MOBILE */
 
 @media(max-width:850px){
 
@@ -593,25 +570,13 @@ body.pointer-hover .cursor-ring{
   </div>
 
   <div class="updated">
-
     LAST DATA UPDATE<br>
-
-    <b>
-      13 Aug 2026 · 12:00
-    </b>
-
-    <br>
-
+    <b>13 Aug 2026 · 12:00</b><br>
     Length ≥ 1,000 mm
-
   </div>
 
 </section>
 
-
-<!-- ======================================================
-     MATERIAL VIEWS
-======================================================= -->
 
 <div class="viewbar">
 
@@ -642,16 +607,12 @@ body.pointer-hover .cursor-ring{
 </div>
 
 
-<!-- ======================================================
-     SEARCH + FILTER
-======================================================= -->
-
 <div class="tools">
 
   <input
     id="search"
     class="search"
-    placeholder="Search piece ID, grade, rack…"
+    placeholder="Search piece ID, grade, rack..."
     autocomplete="off"
   >
 
@@ -677,49 +638,25 @@ body.pointer-hover .cursor-ring{
     <option value="">
       All grades
     </option>
-
-    <option value="AAA">
-      AAA
-    </option>
-
-    <option value="B Grade">
-      B Grade
-    </option>
-
-    <option value="Doreng">
-      Doreng
-    </option>
-
-    <option value="Other">
-      Other
-    </option>
-
   </select>
-
 
   <select
     id="rackFilter"
     class="select"
   >
-
     <option value="">
       All racks
     </option>
-
   </select>
-
 
   <select
     id="statusFilter"
     class="select"
   >
-
     <option value="">
       All status
     </option>
-
   </select>
-
 
   <button
     id="clearFilter"
@@ -731,14 +668,10 @@ body.pointer-hover .cursor-ring{
 </div>
 
 
-<!-- ======================================================
-     META
-======================================================= -->
-
 <div class="meta">
 
   <span id="meta">
-    Loading inventory…
+    Loading inventory...
   </span>
 
   <span>
@@ -747,10 +680,6 @@ body.pointer-hover .cursor-ring{
 
 </div>
 
-
-<!-- ======================================================
-     TABLE
-======================================================= -->
 
 <div class="tablewrap">
 
@@ -815,10 +744,6 @@ body.pointer-hover .cursor-ring{
 </div>
 
 
-<!-- ======================================================
-     VIEW FOOTER
-======================================================= -->
-
 <div class="viewfooter">
 
   <span id="viewname">
@@ -850,10 +775,6 @@ body.pointer-hover .cursor-ring{
 </div>
 
 
-<!-- ======================================================
-     GRAIN CURSOR
-======================================================= -->
-
 <div
   class="cursor-dot"
   id="cursorDot"
@@ -866,15 +787,14 @@ body.pointer-hover .cursor-ring{
 
 
 <!-- ======================================================
-     DATA SOURCE
-=======================================================
-
+     DATA FILE
+     
      IMPORTANT:
-     This file must remain in the same directory:
-
-     material-pieces-data.js
-
-======================================================= -->
+     Keep material-pieces-data.js in the SAME folder.
+     
+     NO PAKO.
+     NO CDN.
+     ====================================================== -->
 
 <script src="./material-pieces-data.js"></script>
 
@@ -886,11 +806,12 @@ body.pointer-hover .cursor-ring{
   try{
 
     /* ====================================================
-       1. GET DATA STRING
+       LOAD DATA
     ==================================================== */
 
     const raw =
       window.__GRAIN_DATA_GZIP__;
+
 
     if(
       typeof raw !== "string" ||
@@ -898,23 +819,23 @@ body.pointer-hover .cursor-ring{
     ){
 
       throw new Error(
-        "material-pieces-data.js loaded, but __GRAIN_DATA_GZIP__ is missing."
+        "material-pieces-data.js did not provide inventory data."
       );
 
     }
 
 
-    /* ====================================================
-       2. NORMALIZE BASE64
+    /*
+    ========================================================
+    IMPORTANT:
 
-       This is the important fix.
+    The data file is expected to contain:
 
-       Handles:
-       - whitespace
-       - line breaks
-       - URL-safe Base64
-       - missing padding
-       ==================================================== */
+    window.__GRAIN_DATA_GZIP__ = "...";
+
+    We normalize the Base64 before decoding.
+    ========================================================
+    */
 
     let encoded =
       raw
@@ -924,11 +845,39 @@ body.pointer-hover .cursor-ring{
         .replace(/_/g,"/");
 
 
+    /*
+    Remove existing Base64 padding.
+    */
+
+    encoded =
+      encoded.replace(
+        /=+$/,
+        ""
+      );
+
+
+    /*
+    Restore correct padding.
+    */
+
     const remainder =
       encoded.length % 4;
 
 
-    if(remainder !== 0){
+    if(
+      remainder === 1
+    ){
+
+      throw new Error(
+        "Inventory data Base64 is malformed. material-pieces-data.js appears to be incomplete or corrupted."
+      );
+
+    }
+
+
+    if(
+      remainder !== 0
+    ){
 
       encoded +=
         "=".repeat(
@@ -938,21 +887,25 @@ body.pointer-hover .cursor-ring{
     }
 
 
-    /* ====================================================
-       3. BASE64 → BYTES
-    ==================================================== */
+    /*
+    ========================================================
+    BASE64 DECODE
+    ========================================================
+    */
 
     let binary;
 
     try{
 
       binary =
-        atob(encoded);
+        atob(
+          encoded
+        );
 
     }catch(error){
 
       throw new Error(
-        "Inventory data Base64 is invalid. Check material-pieces-data.js."
+        "Inventory data Base64 is invalid. Please check material-pieces-data.js."
       );
 
     }
@@ -961,16 +914,16 @@ body.pointer-hover .cursor-ring{
     const compressed =
       Uint8Array.from(
         binary,
-        char => char.charCodeAt(0)
+        character =>
+          character.charCodeAt(0)
       );
 
 
-    /* ====================================================
-       4. GZIP → JSON
-
-       Native browser API.
-       No Pako dependency.
-       ==================================================== */
+    /*
+    ========================================================
+    GZIP DECOMPRESSION
+    ========================================================
+    */
 
     if(
       typeof DecompressionStream ===
@@ -978,20 +931,22 @@ body.pointer-hover .cursor-ring{
     ){
 
       throw new Error(
-        "This browser does not support gzip decompression."
+        "This browser does not support native gzip decompression."
       );
 
     }
 
 
-    const gzip =
+    const decompression =
       new DecompressionStream(
         "gzip"
       );
 
 
     const writer =
-      gzip.writable.getWriter();
+      decompression
+        .writable
+        .getWriter();
 
 
     await writer.write(
@@ -1002,72 +957,116 @@ body.pointer-hover .cursor-ring{
     await writer.close();
 
 
+    const response =
+      new Response(
+        decompression.readable
+      );
+
+
     const json =
-      await new Response(
-        gzip.readable
-      ).text();
+      await response.text();
 
 
-    /* ====================================================
-       5. PARSE INVENTORY
-    ==================================================== */
+    /*
+    ========================================================
+    PARSE JSON
+    ========================================================
+    */
 
-    const DATA =
-      JSON.parse(json);
+    let DATA;
 
+    try{
 
-    if(
-      !DATA ||
-      !Array.isArray(DATA.rows)
-    ){
+      DATA =
+        JSON.parse(
+          json
+        );
+
+    }catch(error){
 
       throw new Error(
-        "Inventory data was decoded but has an invalid structure."
+        "Inventory data was decoded but the JSON is invalid."
       );
 
     }
 
 
-    /* ====================================================
-       HELPERS
-    ==================================================== */
+    if(
+      !DATA ||
+      !Array.isArray(
+        DATA.rows
+      )
+    ){
 
-    const esc =
-      value =>
-        String(
-          value ?? ""
-        ).replace(
-          /[&<>"']/g,
-          char => ({
-            "&":"&amp;",
-            "<":"&lt;",
-            ">":"&gt;",
-            '"':"&quot;",
-            "'":"&#39;"
-          }[char])
-        );
+      throw new Error(
+        "Inventory data structure is invalid."
+      );
+
+    }
 
 
-    const fmt =
-      value =>
-        Number(
-          value || 0
-        ).toLocaleString(
-          "en-US"
-        );
+    /*
+    ========================================================
+    HELPERS
+    ========================================================
+    */
+
+    function esc(
+      value
+    ){
+
+      return String(
+        value ?? ""
+      ).replace(
+        /[&<>"']/g,
+        character => ({
+          "&":"&amp;",
+          "<":"&lt;",
+          ">":"&gt;",
+          '"':"&quot;",
+          "'":"&#39;"
+        }[character])
+      );
+
+    }
 
 
-    const alias =
-      value =>
+    function fmt(
+      value
+    ){
+
+      return Number(
+        value || 0
+      ).toLocaleString(
+        "en-US"
+      );
+
+    }
+
+
+    function alias(
+      value
+    ){
+
+      if(
         DATA.aliases &&
         DATA.aliases[value]
-          ? DATA.aliases[value]
-          : value;
+      ){
+
+        return DATA.aliases[value];
+
+      }
+
+      return value;
+
+    }
 
 
-    /* ====================================================
-       DOM
-    ==================================================== */
+    /*
+    ========================================================
+    DOM
+    ========================================================
+    */
 
     const viewscroll =
       document.getElementById(
@@ -1135,22 +1134,22 @@ body.pointer-hover .cursor-ring{
       );
 
 
-    /* ====================================================
-       DATA
-    ==================================================== */
+    /*
+    ========================================================
+    STATE
+    ========================================================
+    */
 
     const rows =
       DATA.rows;
 
     const views =
-      Array.isArray(DATA.views)
+      Array.isArray(
+        DATA.views
+      )
         ? DATA.views
         : ["Master"];
 
-
-    /* ====================================================
-       STATE
-    ==================================================== */
 
     let active =
       "Master";
@@ -1162,16 +1161,19 @@ body.pointer-hover .cursor-ring{
       1;
 
 
-    /* ====================================================
-       BUILD FILTER OPTIONS
-    ==================================================== */
+    /*
+    ========================================================
+    FILTER OPTIONS
+    ========================================================
+    */
 
     const grades =
       [
         ...new Set(
           rows
             .map(
-              row => row.grade
+              row =>
+                row.grade
             )
             .filter(Boolean)
         )
@@ -1183,7 +1185,8 @@ body.pointer-hover .cursor-ring{
         ...new Set(
           rows
             .map(
-              row => row.rack
+              row =>
+                row.rack
             )
             .filter(Boolean)
         )
@@ -1195,46 +1198,31 @@ body.pointer-hover .cursor-ring{
         ...new Set(
           rows
             .map(
-              row => row.status
+              row =>
+                row.status
             )
             .filter(Boolean)
         )
       ].sort();
 
 
-    /*
-      Add any grades not already hard-coded.
-    */
-
     grades.forEach(
       grade => {
 
-        const exists =
-          [...gradeFilter.options]
-            .some(
-              option =>
-                option.value === grade
-            );
-
-
-        if(!exists){
-
-          const option =
-            document.createElement(
-              "option"
-            );
-
-          option.value =
-            grade;
-
-          option.textContent =
-            grade;
-
-          gradeFilter.appendChild(
-            option
+        const option =
+          document.createElement(
+            "option"
           );
 
-        }
+        option.value =
+          grade;
+
+        option.textContent =
+          grade;
+
+        gradeFilter.appendChild(
+          option
+        );
 
       }
     );
@@ -1284,9 +1272,11 @@ body.pointer-hover .cursor-ring{
     );
 
 
-    /* ====================================================
-       VIEW BUTTON
-    ==================================================== */
+    /*
+    ========================================================
+    VIEWS
+    ========================================================
+    */
 
     function createViewButton(
       value
@@ -1297,7 +1287,6 @@ body.pointer-hover .cursor-ring{
           "button"
         );
 
-
       button.className =
         "view" +
         (
@@ -1306,13 +1295,13 @@ body.pointer-hover .cursor-ring{
             : ""
         );
 
-
       button.textContent =
-        alias(value);
-
+        alias(
+          value
+        );
 
       button.onclick =
-        () => {
+        function(){
 
           selectView(
             value
@@ -1320,15 +1309,10 @@ body.pointer-hover .cursor-ring{
 
         };
 
-
       return button;
 
     }
 
-
-    /* ====================================================
-       BUILD VIEWS
-    ==================================================== */
 
     function buildViews(){
 
@@ -1339,20 +1323,20 @@ body.pointer-hover .cursor-ring{
         "";
 
 
-      const main =
+      const firstViews =
         views.slice(
           0,
           8
         );
 
 
-      const more =
+      const additionalViews =
         views.slice(
           8
         );
 
 
-      main.forEach(
+      firstViews.forEach(
         value => {
 
           viewscroll.appendChild(
@@ -1365,7 +1349,7 @@ body.pointer-hover .cursor-ring{
       );
 
 
-      more.forEach(
+      additionalViews.forEach(
         value => {
 
           popover.appendChild(
@@ -1378,23 +1362,15 @@ body.pointer-hover .cursor-ring{
       );
 
 
-      const moreButton =
-        document.getElementById(
-          "morebtn"
-        );
-
-
-      moreButton.textContent =
-        more.length
-          ? `${more.length} more…`
+      document.getElementById(
+        "morebtn"
+      ).textContent =
+        additionalViews.length
+          ? `${additionalViews.length} more...`
           : "";
 
     }
 
-
-    /* ====================================================
-       SELECT VIEW
-    ==================================================== */
 
     function selectView(
       value
@@ -1428,28 +1404,26 @@ body.pointer-hover .cursor-ring{
     }
 
 
-    /* ====================================================
-       MORE MENU
-    ==================================================== */
+    /*
+    ========================================================
+    MORE MENU
+    ========================================================
+    */
 
-    document
-      .getElementById(
-        "morebtn"
-      )
-      .addEventListener(
-        "click",
-        function(){
+    document.getElementById(
+      "morebtn"
+    ).onclick =
+      function(){
 
-          document
-            .getElementById(
-              "morewrap"
-            )
-            .classList.toggle(
-              "open"
-            );
+        document
+          .getElementById(
+            "morewrap"
+          )
+          .classList.toggle(
+            "open"
+          );
 
-        }
-      );
+      };
 
 
     document.addEventListener(
@@ -1478,12 +1452,14 @@ body.pointer-hover .cursor-ring{
     );
 
 
-    /* ====================================================
-       FILTERS
-    ==================================================== */
+    /*
+    ========================================================
+    FILTERS
+    ========================================================
+    */
 
     function clearFilters(
-      renderNow = true
+      shouldRender = true
     ){
 
       gradeFilter.value =
@@ -1496,7 +1472,9 @@ body.pointer-hover .cursor-ring{
         "";
 
 
-      if(renderNow){
+      if(
+        shouldRender
+      ){
 
         render();
 
@@ -1505,48 +1483,40 @@ body.pointer-hover .cursor-ring{
     }
 
 
-    document
-      .getElementById(
-        "filterToggle"
-      )
-      .addEventListener(
-        "click",
-        function(){
+    document.getElementById(
+      "filterToggle"
+    ).onclick =
+      function(){
 
-          const panel =
-            document.getElementById(
-              "filterPanel"
-            );
+        const panel =
+          document.getElementById(
+            "filterPanel"
+          );
 
 
-          panel.classList.toggle(
+        panel.classList.toggle(
+          "open"
+        );
+
+
+        this.classList.toggle(
+          "active",
+          panel.classList.contains(
             "open"
-          );
+          )
+        );
+
+      };
 
 
-          this.classList.toggle(
-            "active",
-            panel.classList.contains(
-              "open"
-            )
-          );
+    document.getElementById(
+      "clearFilter"
+    ).onclick =
+      function(){
 
-        }
-      );
+        clearFilters();
 
-
-    document
-      .getElementById(
-        "clearFilter"
-      )
-      .addEventListener(
-        "click",
-        function(){
-
-          clearFilters();
-
-        }
-      );
+      };
 
 
     search.addEventListener(
@@ -1573,9 +1543,11 @@ body.pointer-hover .cursor-ring{
     );
 
 
-    /* ====================================================
-       RENDER TABLE
-    ==================================================== */
+    /*
+    ========================================================
+    RENDER
+    ========================================================
+    */
 
     function render(){
 
@@ -1583,7 +1555,7 @@ body.pointer-hover .cursor-ring{
 
 
       /*
-        Material view
+      Current material view
       */
 
       if(
@@ -1605,9 +1577,9 @@ body.pointer-hover .cursor-ring{
       }
 
 
-      /* --------------------------------------------------
-         SEARCH
-      -------------------------------------------------- */
+      /*
+      Search
+      */
 
       const query =
         search.value
@@ -1631,7 +1603,7 @@ body.pointer-hover .cursor-ring{
         visibleRows.filter(
           row => {
 
-            const text =
+            const searchable =
               [
                 row.piece_id,
                 row.grade,
@@ -1646,7 +1618,7 @@ body.pointer-hover .cursor-ring{
 
               (
                 !query ||
-                text.includes(
+                searchable.includes(
                   query
                 )
               )
@@ -1681,15 +1653,20 @@ body.pointer-hover .cursor-ring{
         );
 
 
-      /* --------------------------------------------------
-         SORT
-      -------------------------------------------------- */
+      /*
+      Sort
+      */
 
-      if(sortKey){
+      if(
+        sortKey
+      ){
 
         visibleRows =
           [...visibleRows].sort(
-            function(a,b){
+            function(
+              a,
+              b
+            ){
 
               const x =
                 a[sortKey];
@@ -1713,7 +1690,8 @@ body.pointer-hover .cursor-ring{
                       y ?? ""
                     )
                   )
-                ) * sortDir;
+                ) *
+                sortDir;
 
               }
 
@@ -1725,7 +1703,8 @@ body.pointer-hover .cursor-ring{
                 Number(
                   y || 0
                 )
-              ) * sortDir;
+              ) *
+              sortDir;
 
             }
           );
@@ -1733,38 +1712,53 @@ body.pointer-hover .cursor-ring{
       }
 
 
-      /* --------------------------------------------------
-         CURRENT TOTALS
-      -------------------------------------------------- */
+      /*
+      ========================================================
+      TOTAL PCS
+      ========================================================
+      */
 
       const pcs =
         visibleRows.reduce(
-          (
+          function(
             total,
             row
-          ) =>
-            total +
-            Number(
-              row.qty || 0
-            ),
+          ){
+
+            return (
+              total +
+              Number(
+                row.qty || 0
+              )
+            );
+
+          },
           0
         );
 
 
       /*
-        Use stored CBM when available.
-        If not available, calculate from physical
-        dimensions.
+      ========================================================
+      TOTAL CBM
+
+      Prefer stored CBM.
+
+      If no CBM exists,
+      calculate:
+
+      thickness × width × length × qty
+      / 1,000,000,000
+      ========================================================
       */
 
       const cbm =
         visibleRows.reduce(
-          (
+          function(
             total,
             row
-          ) => {
+          ){
 
-            const existing =
+            const stored =
               Number(
                 row.cbm
               );
@@ -1772,155 +1766,184 @@ body.pointer-hover .cursor-ring{
 
             if(
               Number.isFinite(
-                existing
+                stored
               )
             ){
 
-              return total +
-                existing;
+              return (
+                total +
+                stored
+              );
 
             }
 
 
             const thickness =
               Number(
-                row.thickness || 0
+                row.thickness ||
+                0
               );
+
 
             const width =
               Number(
-                row.width || 0
+                row.width ||
+                0
               );
+
 
             const length =
               Number(
-                row.length || 0
+                row.length ||
+                0
               );
+
 
             const qty =
               Number(
-                row.qty || 0
+                row.qty ||
+                0
               );
 
 
-            return total +
+            return (
+              total +
               (
                 thickness *
                 width *
                 length *
                 qty
               ) /
-              1000000000;
+              1000000000
+            );
 
           },
           0
         );
 
 
-      /* --------------------------------------------------
-         META
-      -------------------------------------------------- */
+      /*
+      META
+      */
 
       meta.textContent =
-        `${fmt(visibleRows.length)} pieces shown · ${fmt(pcs)} pcs`;
+        `${fmt(
+          visibleRows.length
+        )} pieces shown · ${fmt(
+          pcs
+        )} pcs`;
 
 
-      /* --------------------------------------------------
-         FOOTER
-      -------------------------------------------------- */
+      /*
+      FOOTER
+      */
 
       viewname.textContent =
-        alias(active);
+        alias(
+          active
+        );
 
 
       footPcs.textContent =
-        fmt(pcs);
+        fmt(
+          pcs
+        );
 
 
       footCbm.textContent =
-        cbm.toFixed(3);
+        cbm.toFixed(
+          3
+        );
 
 
       footLines.textContent =
-        fmt(visibleRows.length);
+        fmt(
+          visibleRows.length
+        );
 
 
-      /* --------------------------------------------------
-         TABLE HTML
-      -------------------------------------------------- */
+      /*
+      TABLE
+      */
 
       tbody.innerHTML =
         visibleRows
           .map(
-            row => `
+            function(
+              row
+            ){
 
-              <tr>
+              return `
 
-                <td class="id">
-                  ${esc(
-                    row.piece_id
-                  )}
-                </td>
+                <tr>
 
-                <td>
-                  ${row.thickness ?? "—"}
-                </td>
+                  <td class="id">
+                    ${esc(
+                      row.piece_id
+                    )}
+                  </td>
 
-                <td>
-                  ${row.width ?? "—"}
-                </td>
+                  <td>
+                    ${row.thickness ?? "—"}
+                  </td>
 
-                <td>
-                  ${row.length ?? "—"}
-                </td>
+                  <td>
+                    ${row.width ?? "—"}
+                  </td>
 
-                <td>
-                  ${
-                    row.grade
-                      ? `
-                        <span class="pill">
-                          ${esc(
-                            row.grade
-                          )}
-                        </span>
-                      `
-                      : "—"
-                  }
-                </td>
+                  <td>
+                    ${row.length ?? "—"}
+                  </td>
 
-                <td class="num">
-                  ${fmt(
-                    row.qty
-                  )}
-                </td>
+                  <td>
+                    ${
+                      row.grade
+                        ? `
+                          <span class="pill">
+                            ${esc(
+                              row.grade
+                            )}
+                          </span>
+                        `
+                        : "—"
+                    }
+                  </td>
 
-                <td>
-                  ${
-                    row.rack
-                      ? esc(
-                          row.rack
-                        )
-                      : "—"
-                  }
-                </td>
+                  <td class="num">
+                    ${fmt(
+                      row.qty
+                    )}
+                  </td>
 
-                <td>
-                  ${
-                    row.status
-                      ? `
-                        <span class="pill">
-                          ${esc(
-                            row.status
-                          )}
-                        </span>
-                      `
-                      : "—"
-                  }
-                </td>
+                  <td>
+                    ${
+                      row.rack
+                        ? esc(
+                            row.rack
+                          )
+                        : "—"
+                    }
+                  </td>
 
-              </tr>
+                  <td>
+                    ${
+                      row.status
+                        ? `
+                          <span class="pill">
+                            ${esc(
+                              row.status
+                            )}
+                          </span>
+                        `
+                        : "—"
+                    }
+                  </td>
 
-            `
+                </tr>
+
+              `;
+
+            }
           )
           .join("");
 
@@ -1930,31 +1953,32 @@ body.pointer-hover .cursor-ring{
           ? "none"
           : "block";
 
-
     }
 
 
-    /* ====================================================
-       COLUMN SORTING
-    ==================================================== */
+    /*
+    ========================================================
+    SORT HEADERS
+    ========================================================
+    */
 
     document
       .querySelectorAll(
         "th[data-key]"
       )
       .forEach(
-        th => {
+        function(th){
 
-          th.addEventListener(
-            "click",
+          th.onclick =
             function(){
 
               const key =
-                this.dataset.key;
+                th.dataset.key;
 
 
               if(
-                sortKey === key
+                sortKey ===
+                key
               ){
 
                 sortDir *=
@@ -1973,21 +1997,23 @@ body.pointer-hover .cursor-ring{
 
               render();
 
-            }
-          );
+            };
 
         }
       );
 
 
-    /* ====================================================
-       GRAIN CURSOR
-    ==================================================== */
+    /*
+    ========================================================
+    GRAIN CURSOR
+    ========================================================
+    */
 
     const cursorDot =
       document.getElementById(
         "cursorDot"
       );
+
 
     const cursorRing =
       document.getElementById(
@@ -2045,18 +2071,21 @@ body.pointer-hover .cursor-ring{
         (
           mouseX -
           ringX
-        ) * .16;
+        ) *
+        .16;
 
 
       ringY +=
         (
           mouseY -
           ringY
-        ) * .16;
+        ) *
+        .16;
 
 
       cursorRing.style.left =
         ringX + "px";
+
 
       cursorRing.style.top =
         ringY + "px";
@@ -2069,9 +2098,11 @@ body.pointer-hover .cursor-ring{
     }
 
 
-    /* ====================================================
-       START
-    ==================================================== */
+    /*
+    ========================================================
+    INITIALIZE
+    ========================================================
+    */
 
     buildViews();
 
@@ -2088,19 +2119,16 @@ body.pointer-hover .cursor-ring{
     );
 
 
-    const meta =
-      document.getElementById(
-        "meta"
-      );
+    document.getElementById(
+      "meta"
+    ).textContent =
+      "Unable to load inventory data.";
+
 
     const empty =
       document.getElementById(
         "empty"
       );
-
-
-    meta.textContent =
-      "Unable to load inventory data.";
 
 
     empty.style.display =
