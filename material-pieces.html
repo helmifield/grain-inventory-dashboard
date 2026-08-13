@@ -3,8 +3,6 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#f5f4f0">
-
 <title>grain / material pieces</title>
 
 <style>
@@ -14,37 +12,25 @@
   --ink:#11110f;
   --muted:#77746d;
   --line:#d8d5cd;
-  --line-soft:#e5e2da;
+  --soft:#e5e2da;
   --hover:#efede7;
-  --max:1480px;
 }
 
-*{
-  box-sizing:border-box;
-}
+*{box-sizing:border-box}
 
-html{
-  scroll-behavior:smooth;
+html,body{
+  margin:0;
+  min-height:100%;
 }
 
 body{
-  margin:0;
-  min-height:100vh;
   background:var(--bg);
   color:var(--ink);
-  font-family:
-    Inter,
-    ui-sans-serif,
-    -apple-system,
-    BlinkMacSystemFont,
-    "Segoe UI",
-    sans-serif;
+  font-family:Inter,ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
   letter-spacing:-.012em;
 }
 
-button,
-input,
-select{
+button,input,select{
   font:inherit;
 }
 
@@ -57,33 +43,20 @@ a{
   text-decoration:none;
 }
 
-.app{
-  position:relative;
-  z-index:1;
-}
-
 .shell{
-  width:min(
-    calc(100% - 64px),
-    var(--max)
-  );
+  width:min(calc(100% - 64px),1480px);
   margin:auto;
   padding:28px 0 32px;
 }
 
-/* =========================================================
-   HEADER
-   ========================================================= */
+/* HEADER */
 
 .site-header{
   display:flex;
   align-items:center;
   justify-content:space-between;
-  gap:24px;
-
   padding-bottom:18px;
   border-bottom:1px solid var(--line);
-
   margin-bottom:36px;
 }
 
@@ -100,107 +73,58 @@ a{
 
 .header-links{
   display:flex;
-  align-items:center;
   gap:22px;
 }
 
 .header-link{
-  display:inline-flex;
-  align-items:center;
-  gap:6px;
-
   font-size:10px;
-  line-height:1;
   text-transform:uppercase;
   letter-spacing:.12em;
-
   color:#554f69;
-
-  transition:
-    color .2s ease,
-    transform .2s ease;
 }
 
-.header-link:hover{
-  color:var(--ink);
-  transform:translateY(-1px);
-}
-
-/* =========================================================
-   HERO
-   ========================================================= */
+/* HERO */
 
 .hero{
   display:flex;
-  align-items:flex-end;
   justify-content:space-between;
+  align-items:flex-end;
   gap:60px;
-
   padding-bottom:38px;
-}
-
-.hero-left{
-  min-width:0;
 }
 
 .kicker{
   margin-bottom:18px;
-
   color:var(--muted);
-
   font-size:10px;
-  line-height:1;
-
   text-transform:uppercase;
   letter-spacing:.17em;
 }
 
 .hero h1{
   margin:0;
-
-  max-width:680px;
-
-  font-size:
-    clamp(
-      66px,
-      8vw,
-      118px
-    );
-
+  font-size:clamp(66px,8vw,118px);
   line-height:.88;
-
   font-weight:560;
-
   letter-spacing:-.068em;
 }
 
 .hero-copy{
   max-width:510px;
-
-  margin:
-    26px 0 0;
-
+  margin:26px 0 0;
   color:var(--muted);
-
   font-size:13px;
   line-height:1.55;
 }
 
 .update{
   flex:0 0 auto;
-
   min-width:170px;
-
   padding-bottom:3px;
-
   text-align:right;
-
   color:var(--muted);
-
   font-size:10px;
   line-height:1.7;
-
-  text-transform:none;
 }
 
 .update strong{
@@ -209,55 +133,59 @@ a{
 }
 
 /* =========================================================
-   VIEWS
+   VIEW NAV — FIXED
    ========================================================= */
 
 .views{
-  position:relative;
-
   display:flex;
   align-items:center;
+  width:100%;
+  min-width:0;
+  min-height:58px;
 
   border-top:1px solid var(--ink);
   border-bottom:1px solid var(--line);
 
-  min-height:58px;
+  overflow:visible;
 }
 
 .view-scroll{
   display:flex;
   align-items:center;
-  gap:3px;
 
-  width:100%;
+  flex:1 1 auto;
+  min-width:0;
+  width:0;
 
-  overflow-x:auto;
+  overflow:hidden;
 
-  scrollbar-width:none;
-}
-
-.view-scroll::-webkit-scrollbar{
-  display:none;
+  gap:0;
 }
 
 .view-button{
-  flex:0 0 auto;
+  flex:0 1 auto;
+
+  min-width:0;
+  max-width:180px;
+
+  padding:10px 15px;
 
   border:0;
-  border-radius:999px;
+  border-right:1px solid var(--soft);
+  border-radius:0;
 
   background:transparent;
-
-  padding:
-    10px 14px;
 
   color:var(--muted);
 
   font-size:10px;
+  line-height:1.2;
 
-  transition:
-    background .18s ease,
-    color .18s ease;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+
+  transition:.18s ease;
 }
 
 .view-button:hover{
@@ -266,26 +194,58 @@ a{
 }
 
 .view-button.active{
+  flex:0 0 auto;
+  max-width:none;
+
+  border:0;
+  border-radius:999px;
+
   background:var(--ink);
   color:#fff;
 }
 
+.view-button:first-child{
+  flex:0 0 auto;
+  max-width:none;
+
+  margin-right:5px;
+
+  border:0;
+  border-radius:999px;
+}
+
+.view-button.active:hover{
+  background:var(--ink);
+  color:#fff;
+}
+
+/* MORE */
+
 .more-wrap{
   position:relative;
-
   flex:0 0 auto;
+
+  margin-left:auto;
+  padding-left:10px;
+
+  background:var(--bg);
 }
 
 .more-button{
+  display:inline-flex;
+  align-items:center;
+
+  min-width:100px;
+
+  padding:12px 5px 12px 12px;
+
   border:0;
   background:var(--bg);
-
-  padding:
-    12px 4px 12px 16px;
 
   color:var(--muted);
 
   font-size:10px;
+  white-space:nowrap;
 }
 
 .more-button:hover{
@@ -296,24 +256,22 @@ a{
   display:none;
 
   position:absolute;
-  z-index:50;
+  z-index:100;
 
-  top:44px;
+  top:50px;
   right:0;
 
   width:280px;
   max-height:390px;
 
-  overflow:auto;
+  overflow-y:auto;
 
   padding:8px;
 
   background:var(--paper);
-
   border:1px solid var(--line);
 
-  box-shadow:
-    0 18px 50px rgba(0,0,0,.08);
+  box-shadow:0 18px 50px rgba(0,0,0,.08);
 }
 
 .more-wrap.open .more-menu{
@@ -324,30 +282,35 @@ a{
   display:block;
 
   width:100%;
+  max-width:none;
+
+  margin:0;
+  padding:10px 12px;
+
+  border:0;
+  border-radius:7px;
 
   text-align:left;
-
-  border-radius:7px;
 }
 
-/* =========================================================
-   TOOLBAR
-   ========================================================= */
+.more-menu .view-button:first-child{
+  border-radius:7px;
+  margin:0;
+}
+
+/* TOOLBAR */
 
 .toolbar{
   display:flex;
   align-items:center;
   gap:10px;
 
-  padding:
-    14px 0;
+  padding:14px 0;
 
   border-bottom:1px solid var(--line);
 }
 
 .search-wrap{
-  position:relative;
-
   width:360px;
   max-width:100%;
 }
@@ -355,25 +318,17 @@ a{
 .search{
   width:100%;
 
-  border:
-    1px solid var(--line);
+  padding:10px 15px;
 
+  border:1px solid var(--line);
   border-radius:999px;
-
-  background:var(--paper);
 
   outline:none;
 
-  padding:
-    10px 15px;
-
+  background:var(--paper);
   color:var(--ink);
 
   font-size:11px;
-
-  transition:
-    border-color .2s ease,
-    background .2s ease;
 }
 
 .search:focus{
@@ -383,23 +338,16 @@ a{
 
 .filter-button,
 .clear-button{
-  border:
-    1px solid var(--line);
+  padding:9px 14px;
 
+  border:1px solid var(--line);
   border-radius:999px;
 
   background:transparent;
 
-  padding:
-    9px 14px;
-
   color:var(--ink);
 
   font-size:10px;
-
-  transition:
-    background .18s ease,
-    border-color .18s ease;
 }
 
 .filter-button:hover,
@@ -413,9 +361,7 @@ a{
   color:#fff;
 }
 
-/* =========================================================
-   FILTER PANEL
-   ========================================================= */
+/* FILTER */
 
 .filter-panel{
   display:none;
@@ -424,8 +370,7 @@ a{
   flex-wrap:wrap;
   gap:8px;
 
-  padding:
-    12px 0;
+  padding:12px 0;
 
   border-bottom:1px solid var(--line);
 }
@@ -435,91 +380,62 @@ a{
 }
 
 .filter-select{
-  appearance:none;
-
   min-width:145px;
 
-  border:
-    1px solid var(--line);
+  padding:8px 13px;
 
+  border:1px solid var(--line);
   border-radius:999px;
 
   background:var(--paper);
-
-  padding:
-    8px 13px;
-
-  outline:none;
-
   color:var(--ink);
 
   font-size:10px;
+  outline:none;
 }
 
-.filter-select:focus{
-  border-color:#99958c;
-}
-
-/* =========================================================
-   META
-   ========================================================= */
+/* META */
 
 .meta-row{
   display:flex;
-  align-items:center;
   justify-content:space-between;
   gap:20px;
 
-  padding:
-    12px 0;
+  padding:12px 0;
 
   color:var(--muted);
-
   font-size:10px;
 }
 
-/* =========================================================
-   TABLE
-   ========================================================= */
+/* TABLE */
 
 .table-shell{
   overflow-x:auto;
-
   background:var(--paper);
-
-  border-top:
-    1px solid var(--line);
+  border-top:1px solid var(--line);
 }
 
 table{
   width:100%;
-
   min-width:1080px;
-
   border-collapse:collapse;
-
   table-layout:fixed;
 }
 
 thead{
-  background:
-    rgba(250,249,246,.96);
-
   position:sticky;
   top:0;
   z-index:10;
 
+  background:rgba(250,249,246,.96);
   backdrop-filter:blur(10px);
 }
 
 th{
   height:40px;
+  padding:0 13px;
 
-  padding:
-    0 13px;
-
-  border-bottom:
-    1px solid var(--ink);
+  border-bottom:1px solid var(--ink);
 
   text-align:left;
 
@@ -532,10 +448,7 @@ th{
   letter-spacing:.14em;
 
   white-space:nowrap;
-
   cursor:pointer;
-
-  user-select:none;
 }
 
 th:hover{
@@ -544,27 +457,17 @@ th:hover{
 
 td{
   height:43px;
+  padding:0 13px;
 
-  padding:
-    0 13px;
-
-  border-bottom:
-    1px solid var(--line-soft);
+  border-bottom:1px solid var(--soft);
 
   color:var(--ink);
 
   font-size:11px;
 
   white-space:nowrap;
-
   overflow:hidden;
-
   text-overflow:ellipsis;
-}
-
-tbody tr{
-  transition:
-    background .15s ease;
 }
 
 tbody tr:hover{
@@ -572,29 +475,15 @@ tbody tr:hover{
 }
 
 .piece-id{
-  font-family:
-    ui-monospace,
-    SFMono-Regular,
-    Menlo,
-    Monaco,
-    Consolas,
-    monospace;
-
+  font-family:ui-monospace,SFMono-Regular,Menlo,monospace;
   font-size:10px;
   font-weight:600;
 }
 
 .number{
-  font-variant-numeric:
-    tabular-nums;
-
-  font-family:
-    ui-monospace,
-    SFMono-Regular,
-    Menlo,
-    monospace;
-
+  font-family:ui-monospace,SFMono-Regular,Menlo,monospace;
   font-size:10px;
+  font-variant-numeric:tabular-nums;
 }
 
 .pill{
@@ -602,56 +491,54 @@ tbody tr:hover{
   align-items:center;
 
   min-height:21px;
+  padding:3px 8px;
 
-  padding:
-    3px 8px;
-
-  border:
-    1px solid var(--line);
-
+  border:1px solid var(--line);
   border-radius:999px;
 
   color:var(--muted);
 
   font-size:9px;
-
   line-height:1;
+}
+
+.loading{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+
+  min-height:250px;
+
+  color:var(--muted);
+  font-size:11px;
 }
 
 .empty{
   display:none;
 
-  padding:
-    70px 20px;
+  padding:70px 20px;
 
   text-align:center;
 
   color:var(--muted);
-
   font-size:11px;
 }
 
-/* =========================================================
-   FOOTER / VIEW TOTAL
-   ========================================================= */
+/* FOOTER */
 
 .view-footer{
   display:flex;
-  align-items:center;
   justify-content:space-between;
+  align-items:center;
 
   gap:24px;
 
   margin-top:14px;
+  padding:14px 0 0;
 
-  padding:
-    14px 0 0;
-
-  border-top:
-    1px solid var(--ink);
+  border-top:1px solid var(--ink);
 
   color:var(--muted);
-
   font-size:10px;
 }
 
@@ -661,12 +548,7 @@ tbody tr:hover{
 
 .view-stats{
   display:flex;
-  align-items:center;
   gap:28px;
-}
-
-.view-stats span{
-  white-space:nowrap;
 }
 
 .view-stats strong{
@@ -674,9 +556,7 @@ tbody tr:hover{
   font-weight:650;
 }
 
-/* =========================================================
-   GRAIN CURSOR
-   ========================================================= */
+/* CURSOR */
 
 .cursor-dot,
 .cursor-ring{
@@ -687,8 +567,7 @@ tbody tr:hover{
 
   pointer-events:none;
 
-  transform:
-    translate(-50%,-50%);
+  transform:translate(-50%,-50%);
 
   z-index:9999;
 }
@@ -706,59 +585,28 @@ tbody tr:hover{
   width:28px;
   height:28px;
 
-  border:
-    1px solid rgba(17,17,15,.42);
-
+  border:1px solid rgba(17,17,15,.42);
   border-radius:50%;
 
   transition:
     width .2s ease,
     height .2s ease,
-    border-color .2s ease,
     background .2s ease;
 }
 
 body.pointer-hover .cursor-ring{
   width:42px;
   height:42px;
-
-  border-color:var(--ink);
-
-  background:
-    rgba(17,17,15,.035);
+  background:rgba(17,17,15,.035);
 }
 
-/* =========================================================
-   LOADING
-   ========================================================= */
-
-.loading{
-  display:flex;
-  align-items:center;
-  justify-content:center;
-
-  min-height:250px;
-
-  color:var(--muted);
-
-  font-size:11px;
-}
-
-/* =========================================================
-   MOBILE
-   ========================================================= */
+/* MOBILE */
 
 @media(max-width:900px){
 
   .shell{
-    width:
-      calc(100% - 32px);
-
+    width:calc(100% - 32px);
     padding-top:20px;
-  }
-
-  .site-header{
-    margin-bottom:32px;
   }
 
   .header-links{
@@ -767,27 +615,30 @@ body.pointer-hover .cursor-ring{
 
   .hero{
     display:block;
-
     padding-bottom:32px;
   }
 
   .hero h1{
-    font-size:
-      clamp(
-        62px,
-        17vw,
-        92px
-      );
-  }
-
-  .hero-copy{
-    max-width:470px;
+    font-size:clamp(62px,17vw,92px);
   }
 
   .update{
     margin-top:24px;
-
     text-align:left;
+  }
+
+  .view-scroll{
+    overflow-x:auto;
+    scrollbar-width:none;
+  }
+
+  .view-scroll::-webkit-scrollbar{
+    display:none;
+  }
+
+  .view-scroll .view-button{
+    flex:0 0 auto;
+    max-width:190px;
   }
 
   .toolbar{
@@ -799,43 +650,17 @@ body.pointer-hover .cursor-ring{
     margin-bottom:9px;
   }
 
-  .meta-row{
-    align-items:flex-start;
-  }
-
-  .meta-row span:last-child{
-    text-align:right;
-  }
-
-  .view-footer{
-    align-items:flex-start;
-  }
-
-  .view-stats{
-    gap:16px;
-    flex-wrap:wrap;
-    justify-content:flex-end;
-  }
-
   .cursor-dot,
   .cursor-ring{
     display:none;
   }
+
 }
 
 @media(max-width:560px){
 
   .shell{
-    width:
-      calc(100% - 24px);
-  }
-
-  .hero h1{
-    letter-spacing:-.065em;
-  }
-
-  .subtitle{
-    font-size:12px;
+    width:calc(100% - 24px);
   }
 
   .meta-row{
@@ -845,7 +670,6 @@ body.pointer-hover .cursor-ring{
   .meta-row span:last-child{
     display:block;
     margin-top:6px;
-    text-align:left;
   }
 
   .view-footer{
@@ -853,645 +677,468 @@ body.pointer-hover .cursor-ring{
   }
 
   .view-stats{
-    justify-content:flex-start;
     margin-top:9px;
+    gap:16px;
+    flex-wrap:wrap;
   }
+
 }
 </style>
 </head>
 
-
 <body>
 
-<div class="app">
+<main class="shell">
 
-  <main class="shell">
+<header class="site-header">
 
-    <!-- =====================================================
-         HEADER
-         ===================================================== -->
+  <div class="brand">
+    grain <span>/ material pieces</span>
+  </div>
 
-    <header class="site-header">
+  <nav class="header-links">
 
-      <div class="brand">
-        grain <span>/ material pieces</span>
-      </div>
-
-      <nav class="header-links">
-
-        <a
-          class="header-link"
-          href="https://grain-inventory-dashboard.pages.dev"
-          target="_blank"
-          rel="noopener"
-        >
-          inventory overview ↗
-        </a>
-
-        <a
-          class="header-link"
-          href="https://app.notion.com/p/3b2587ac8c7880c58f18cab26e5d7d14?v=3b2587ac8c7880a09c54000c3e883df6&source=copy_link"
-          target="_blank"
-          rel="noopener"
-        >
-          master database ↗
-        </a>
-
-      </nav>
-
-    </header>
-
-
-    <!-- =====================================================
-         HERO
-         ===================================================== -->
-
-    <section class="hero">
-
-      <div class="hero-left">
-
-        <div class="kicker">
-          Wright / Material Pieces / 13.08.26
-        </div>
-
-        <h1>
-          material<br>
-          pieces.
-        </h1>
-
-        <p class="hero-copy">
-          Piece-level inventory records with material views,
-          dimensions and grade. Built from the latest master data.
-        </p>
-
-      </div>
-
-
-      <div class="update">
-
-        LAST DATA UPDATE<br>
-
-        <strong>
-          13 Aug 2026 · 12:00
-        </strong>
-
-        <br>
-
-        Length ≥ 1,000 mm
-
-      </div>
-
-    </section>
-
-
-    <!-- =====================================================
-         VIEWS
-         ===================================================== -->
-
-    <section class="views">
-
-      <div
-        class="view-scroll"
-        id="viewScroll"
-      >
-      </div>
-
-
-      <div
-        class="more-wrap"
-        id="moreWrap"
-      >
-
-        <button
-          class="more-button"
-          id="moreButton"
-          type="button"
-        >
-          more...
-        </button>
-
-
-        <div
-          class="more-menu"
-          id="moreMenu"
-        >
-        </div>
-
-      </div>
-
-    </section>
-
-
-    <!-- =====================================================
-         TOOLBAR
-         ===================================================== -->
-
-    <section class="toolbar">
-
-      <div class="search-wrap">
-
-        <input
-          id="search"
-          class="search"
-          type="search"
-          placeholder="Search piece ID, grade, rack..."
-          autocomplete="off"
-          spellcheck="false"
-        >
-
-      </div>
-
-
-      <button
-        id="filterButton"
-        class="filter-button"
-        type="button"
-      >
-        Filter
-      </button>
-
-    </section>
-
-
-    <!-- =====================================================
-         FILTERS
-         ===================================================== -->
-
-    <section
-      id="filterPanel"
-      class="filter-panel"
+    <a
+      class="header-link"
+      href="https://grain-inventory-dashboard.pages.dev"
+      target="_blank"
+      rel="noopener"
     >
+      inventory overview ↗
+    </a>
 
-      <select
-        id="gradeFilter"
-        class="filter-select"
-      >
-        <option value="">
-          All grades
-        </option>
-      </select>
+    <a
+      class="header-link"
+      href="https://app.notion.com/p/3b2587ac8c7880c58f18cab26e5d7d14?v=3b2587ac8c7880a09c54000c3e883df6&source=copy_link"
+      target="_blank"
+      rel="noopener"
+    >
+      master database ↗
+    </a>
 
+  </nav>
 
-      <select
-        id="rackFilter"
-        class="filter-select"
-      >
-        <option value="">
-          All racks
-        </option>
-      </select>
+</header>
 
 
-      <select
-        id="statusFilter"
-        class="filter-select"
-      >
-        <option value="">
-          All status
-        </option>
-      </select>
+<section class="hero">
 
+  <div>
 
-      <button
-        id="clearFilter"
-        class="clear-button"
-        type="button"
-      >
-        Clear
-      </button>
-
-    </section>
-
-
-    <!-- =====================================================
-         META
-         ===================================================== -->
-
-    <div class="meta-row">
-
-      <span id="meta">
-        Loading inventory...
-      </span>
-
-      <span>
-        Click a column heading to sort
-      </span>
-
+    <div class="kicker">
+      Wright / Material Pieces / 13.08.26
     </div>
 
+    <h1>
+      material<br>
+      pieces.
+    </h1>
 
-    <!-- =====================================================
-         TABLE
-         ===================================================== -->
+    <p class="hero-copy">
+      Piece-level inventory records with material views,
+      dimensions and grade. Built from the latest master data.
+    </p>
 
-    <section class="table-shell">
+  </div>
 
-      <table>
+  <div class="update">
+    LAST DATA UPDATE<br>
 
-        <colgroup>
+    <strong>
+      13 Aug 2026 · 12:00
+    </strong>
 
-          <col style="width:20%">
-          <col style="width:12%">
-          <col style="width:12%">
-          <col style="width:12%">
-          <col style="width:13%">
-          <col style="width:8%">
-          <col style="width:11%">
-          <col style="width:12%">
+    <br>
 
-        </colgroup>
+    Length ≥ 1,000 mm
+  </div>
 
-
-        <thead>
-
-          <tr>
-
-            <th data-key="piece_id">
-              Aa&nbsp;&nbsp; Piece ID
-            </th>
-
-            <th data-key="thickness">
-              #&nbsp;&nbsp; Thickness (mm)
-            </th>
-
-            <th data-key="width">
-              #&nbsp;&nbsp; Width (mm)
-            </th>
-
-            <th data-key="length">
-              #&nbsp;&nbsp; Length (mm)
-            </th>
-
-            <th data-key="grade">
-              ◉&nbsp;&nbsp; Grade
-            </th>
-
-            <th
-              data-key="qty"
-              class="number"
-            >
-              Qty
-            </th>
-
-            <th data-key="rack">
-              Rack
-            </th>
-
-            <th data-key="status">
-              Status
-            </th>
-
-          </tr>
-
-        </thead>
+</section>
 
 
-        <tbody id="tbody">
-        </tbody>
+<section class="views">
 
-      </table>
+  <div
+    id="viewScroll"
+    class="view-scroll"
+  ></div>
 
+  <div
+    id="moreWrap"
+    class="more-wrap"
+  >
 
-      <div
-        id="loading"
-        class="loading"
-      >
-        Loading inventory...
-      </div>
+    <button
+      id="moreButton"
+      class="more-button"
+      type="button"
+    >
+      more...
+    </button>
 
+    <div
+      id="moreMenu"
+      class="more-menu"
+    ></div>
 
-      <div
-        id="empty"
-        class="empty"
-      >
-        No pieces match this view.
-      </div>
+  </div>
 
-    </section>
-
-
-    <!-- =====================================================
-         FOOTER TOTALS
-         ===================================================== -->
-
-    <footer class="view-footer">
-
-      <span
-        id="viewName"
-        class="view-name"
-      >
-        Master
-      </span>
+</section>
 
 
-      <div class="view-stats">
+<section class="toolbar">
 
-        <span>
-          <strong id="footPcs">
-            —
-          </strong>
-          pcs
-        </span>
+  <div class="search-wrap">
+
+    <input
+      id="search"
+      class="search"
+      type="search"
+      placeholder="Search piece ID, grade, rack..."
+      autocomplete="off"
+      spellcheck="false"
+    >
+
+  </div>
+
+  <button
+    id="filterButton"
+    class="filter-button"
+    type="button"
+  >
+    Filter
+  </button>
+
+</section>
 
 
-        <span>
-          <strong id="footCbm">
-            —
-          </strong>
-          CBM
-        </span>
+<section
+  id="filterPanel"
+  class="filter-panel"
+>
+
+  <select
+    id="gradeFilter"
+    class="filter-select"
+  >
+    <option value="">All grades</option>
+  </select>
+
+  <select
+    id="rackFilter"
+    class="filter-select"
+  >
+    <option value="">All racks</option>
+  </select>
+
+  <select
+    id="statusFilter"
+    class="filter-select"
+  >
+    <option value="">All status</option>
+  </select>
+
+  <button
+    id="clearFilter"
+    class="clear-button"
+    type="button"
+  >
+    Clear
+  </button>
+
+</section>
 
 
-        <span>
-          <strong id="footLines">
-            —
-          </strong>
-          lines
-        </span>
+<div class="meta-row">
 
-      </div>
+  <span id="meta">
+    Loading inventory...
+  </span>
 
-    </footer>
-
-  </main>
+  <span>
+    Click a column heading to sort
+  </span>
 
 </div>
 
 
-<!-- =========================================================
-     GRAIN CURSOR
-     ========================================================= -->
+<section class="table-shell">
+
+<table>
+
+<colgroup>
+  <col style="width:20%">
+  <col style="width:12%">
+  <col style="width:12%">
+  <col style="width:12%">
+  <col style="width:13%">
+  <col style="width:8%">
+  <col style="width:11%">
+  <col style="width:12%">
+</colgroup>
+
+<thead>
+
+<tr>
+
+<th data-key="piece_id">
+  Aa&nbsp;&nbsp; Piece ID
+</th>
+
+<th data-key="thickness">
+  #&nbsp;&nbsp; Thickness (mm)
+</th>
+
+<th data-key="width">
+  #&nbsp;&nbsp; Width (mm)
+</th>
+
+<th data-key="length">
+  #&nbsp;&nbsp; Length (mm)
+</th>
+
+<th data-key="grade">
+  ◉&nbsp;&nbsp; Grade
+</th>
+
+<th data-key="qty">
+  Qty
+</th>
+
+<th data-key="rack">
+  Rack
+</th>
+
+<th data-key="status">
+  Status
+</th>
+
+</tr>
+
+</thead>
+
+<tbody id="tbody"></tbody>
+
+</table>
 
 <div
-  id="cursorDot"
-  class="cursor-dot"
-></div>
+  id="loading"
+  class="loading"
+>
+  Loading inventory...
+</div>
 
 <div
-  id="cursorRing"
-  class="cursor-ring"
-></div>
+  id="empty"
+  class="empty"
+>
+  No pieces match this view.
+</div>
+
+</section>
 
 
-<!-- =========================================================
-     DATA SOURCE
+<footer class="view-footer">
 
-     material-pieces-data.js
-     fetches:
-     material-pieces.csv
-     ========================================================= -->
+  <span
+    id="viewName"
+    class="view-name"
+  >
+    Master
+  </span>
+
+  <div class="view-stats">
+
+    <span>
+      <strong id="footPcs">—</strong>
+      pcs
+    </span>
+
+    <span>
+      <strong id="footCbm">—</strong>
+      CBM
+    </span>
+
+    <span>
+      <strong id="footLines">—</strong>
+      lines
+    </span>
+
+  </div>
+
+</footer>
+
+</main>
+
+
+<div id="cursorDot" class="cursor-dot"></div>
+<div id="cursorRing" class="cursor-ring"></div>
+
 
 <script src="./material-pieces-data.js"></script>
 
 
 <script>
+
 (function(){
 
-  "use strict";
+"use strict";
 
 
-  /*
-  ============================================================
-  STATE
-  ============================================================
-  */
+let DATA = null;
 
-  let DATA = null;
+let activeView = "Master";
 
-  let activeView =
-    "Master";
+let sortKey = null;
 
-  let sortKey =
-    null;
-
-  let sortDirection =
-    1;
+let sortDirection = 1;
 
 
-  /*
-  ============================================================
-  DOM
-  ============================================================
-  */
+const viewScroll =
+  document.getElementById("viewScroll");
 
-  const viewScroll =
-    document.getElementById(
-      "viewScroll"
-    );
+const moreWrap =
+  document.getElementById("moreWrap");
 
-  const moreWrap =
-    document.getElementById(
-      "moreWrap"
-    );
+const moreButton =
+  document.getElementById("moreButton");
 
-  const moreButton =
-    document.getElementById(
-      "moreButton"
-    );
+const moreMenu =
+  document.getElementById("moreMenu");
 
-  const moreMenu =
-    document.getElementById(
-      "moreMenu"
-    );
+const search =
+  document.getElementById("search");
 
-  const search =
-    document.getElementById(
-      "search"
-    );
+const filterButton =
+  document.getElementById("filterButton");
 
-  const filterButton =
-    document.getElementById(
-      "filterButton"
-    );
+const filterPanel =
+  document.getElementById("filterPanel");
 
-  const filterPanel =
-    document.getElementById(
-      "filterPanel"
-    );
+const gradeFilter =
+  document.getElementById("gradeFilter");
 
-  const gradeFilter =
-    document.getElementById(
-      "gradeFilter"
-    );
+const rackFilter =
+  document.getElementById("rackFilter");
 
-  const rackFilter =
-    document.getElementById(
-      "rackFilter"
-    );
+const statusFilter =
+  document.getElementById("statusFilter");
 
-  const statusFilter =
-    document.getElementById(
-      "statusFilter"
-    );
+const clearFilter =
+  document.getElementById("clearFilter");
 
-  const clearFilter =
-    document.getElementById(
-      "clearFilter"
-    );
+const tbody =
+  document.getElementById("tbody");
 
-  const tbody =
-    document.getElementById(
-      "tbody"
-    );
+const loading =
+  document.getElementById("loading");
 
-  const loading =
-    document.getElementById(
-      "loading"
-    );
+const empty =
+  document.getElementById("empty");
 
-  const empty =
-    document.getElementById(
-      "empty"
-    );
+const meta =
+  document.getElementById("meta");
 
-  const meta =
-    document.getElementById(
-      "meta"
-    );
+const viewName =
+  document.getElementById("viewName");
 
-  const viewName =
-    document.getElementById(
-      "viewName"
-    );
+const footPcs =
+  document.getElementById("footPcs");
 
-  const footPcs =
-    document.getElementById(
-      "footPcs"
-    );
+const footCbm =
+  document.getElementById("footCbm");
 
-  const footCbm =
-    document.getElementById(
-      "footCbm"
-    );
-
-  const footLines =
-    document.getElementById(
-      "footLines"
-    );
+const footLines =
+  document.getElementById("footLines");
 
 
-  /*
-  ============================================================
-  HELPERS
-  ============================================================
-  */
+/* ---------------------------------------------------------
+   CLEAN VIEW LABEL
+   --------------------------------------------------------- */
 
-  function escapeHTML(
-    value
+function cleanViewName(value){
+
+  if(
+    typeof value !== "string"
   ){
-
-    return String(
-      value ?? ""
-    ).replace(
-      /[&<>"']/g,
-      function(character){
-
-        return {
-          "&":"&amp;",
-          "<":"&lt;",
-          ">":"&gt;",
-          '"':"&quot;",
-          "'":"&#39;"
-        }[character];
-
-      }
-    );
-
-  }
-
-
-  function formatNumber(
-    value
-  ){
-
-    return Number(
-      value || 0
-    ).toLocaleString(
-      "en-US"
-    );
-
-  }
-
-
-  function formatCbm(
-    value
-  ){
-
-    return Number(
-      value || 0
-    ).toFixed(3);
-
-  }
-
-
-  function getAlias(
-    value
-  ){
-
-    if(
-      DATA &&
-      DATA.aliases &&
-      DATA.aliases[value]
-    ){
-
-      return DATA.aliases[value];
-
-    }
-
     return value;
-
   }
 
+  return value
+    .replace(
+      /\s*\(\s*https?:\/\/[^)]*\s*\)/gi,
+      ""
+    )
+    .replace(
+      /\s*https?:\/\/\S+/gi,
+      ""
+    )
+    .trim();
 
-  /*
-  ============================================================
-  DATA READY
-  ============================================================
-  */
-
-  function initialize(){
-
-    DATA =
-      window.MATERIAL_PIECES_DATA;
+}
 
 
-    if(
-      !DATA ||
-      !Array.isArray(
-        DATA.rows
-      )
-    ){
+/* ---------------------------------------------------------
+   HTML ESCAPE
+   --------------------------------------------------------- */
 
-      showError(
-        "Unable to load inventory data."
-      );
+function escapeHTML(value){
 
-      return;
+  return String(
+    value ?? ""
+  ).replace(
+    /[&<>"']/g,
+    function(c){
+
+      return {
+        "&":"&amp;",
+        "<":"&lt;",
+        ">":"&gt;",
+        '"':"&quot;",
+        "'":"&#39;"
+      }[c];
 
     }
+  );
+
+}
 
 
-    loading.style.display =
-      "none";
+function formatNumber(value){
+
+  return Number(
+    value || 0
+  ).toLocaleString(
+    "en-US"
+  );
+
+}
 
 
-    buildFilters();
+function formatCbm(value){
 
-    buildViews();
+  return Number(
+    value || 0
+  ).toFixed(3);
 
-    render();
-
-  }
+}
 
 
-  /*
-  ============================================================
-  ERROR
-  ============================================================
-  */
+/* ---------------------------------------------------------
+   INITIALIZE
+   --------------------------------------------------------- */
 
-  function showError(
-    message
+function initialize(){
+
+  DATA =
+    window.MATERIAL_PIECES_DATA;
+
+
+  if(
+    !DATA ||
+    !Array.isArray(
+      DATA.rows
+    )
   ){
 
     loading.style.display =
@@ -1501,1065 +1148,892 @@ body.pointer-hover .cursor-ring{
       "block";
 
     empty.textContent =
-      message;
+      "Unable to load inventory data.";
 
     meta.textContent =
       "Unable to load inventory data.";
 
+    return;
+
   }
 
 
-  /*
-  ============================================================
-  VIEWS
-  ============================================================
-  */
+  loading.style.display =
+    "none";
 
-  function createView(
-    name
+  buildFilters();
+
+  buildViews();
+
+  render();
+
+}
+
+
+/* ---------------------------------------------------------
+   VIEWS
+   --------------------------------------------------------- */
+
+function makeViewButton(
+  rawName
+){
+
+  const name =
+    rawName;
+
+  const button =
+    document.createElement(
+      "button"
+    );
+
+  button.type =
+    "button";
+
+  button.className =
+    "view-button";
+
+  if(
+    name === activeView
   ){
 
-    const button =
-      document.createElement(
-        "button"
-      );
-
-    button.type =
-      "button";
-
-    button.className =
-      "view-button";
-
-    if(
-      name === activeView
-    ){
-
-      button.classList.add(
-        "active"
-      );
-
-    }
-
-    button.textContent =
-      getAlias(
-        name
-      );
-
-    button.addEventListener(
-      "click",
-      function(){
-
-        activeView =
-          name;
-
-        sortKey =
-          null;
-
-        sortDirection =
-          1;
-
-        search.value =
-          "";
-
-        clearFilters(
-          false
-        );
-
-        moreWrap.classList.remove(
-          "open"
-        );
-
-        buildViews();
-
-        render();
-
-        window.scrollTo(
-          {
-            top:0,
-            behavior:"smooth"
-          }
-        );
-
-      }
-    );
-
-    return button;
-
-  }
-
-
-  function buildViews(){
-
-    viewScroll.innerHTML =
-      "";
-
-    moreMenu.innerHTML =
-      "";
-
-
-    const views =
-      Array.isArray(
-        DATA.views
-      )
-        ? DATA.views
-        : ["Master"];
-
-
-    const primary =
-      views.slice(
-        0,
-        8
-      );
-
-    const secondary =
-      views.slice(
-        8
-      );
-
-
-    primary.forEach(
-      function(view){
-
-        viewScroll.appendChild(
-          createView(
-            view
-          )
-        );
-
-      }
-    );
-
-
-    secondary.forEach(
-      function(view){
-
-        moreMenu.appendChild(
-          createView(
-            view
-          )
-        );
-
-      }
-    );
-
-
-    if(
-      secondary.length
-    ){
-
-      moreButton.style.display =
-        "block";
-
-      moreButton.textContent =
-        `${secondary.length} more...`;
-
-    }else{
-
-      moreButton.style.display =
-        "none";
-
-    }
-
-  }
-
-
-  /*
-  ============================================================
-  MORE MENU
-  ============================================================
-  */
-
-  moreButton.addEventListener(
-    "click",
-    function(event){
-
-      event.stopPropagation();
-
-      moreWrap.classList.toggle(
-        "open"
-      );
-
-    }
-  );
-
-
-  document.addEventListener(
-    "click",
-    function(event){
-
-      if(
-        !moreWrap.contains(
-          event.target
-        )
-      ){
-
-        moreWrap.classList.remove(
-          "open"
-        );
-
-      }
-
-    }
-  );
-
-
-  /*
-  ============================================================
-  FILTER OPTIONS
-  ============================================================
-  */
-
-  function addOptions(
-    select,
-    values
-  ){
-
-    values.forEach(
-      function(value){
-
-        if(
-          value === null ||
-          value === undefined ||
-          value === ""
-        ){
-
-          return;
-
-        }
-
-        const option =
-          document.createElement(
-            "option"
-          );
-
-        option.value =
-          value;
-
-        option.textContent =
-          value;
-
-        select.appendChild(
-          option
-        );
-
-      }
+    button.classList.add(
+      "active"
     );
 
   }
 
-
-  function buildFilters(){
-
-    const rows =
-      DATA.rows;
-
-
-    const grades =
-      [
-        ...new Set(
-          rows
-            .map(
-              row =>
-                row.grade
-            )
-            .filter(
-              Boolean
-            )
-        )
-      ]
-      .sort(
-        (a,b) =>
-          String(a)
-            .localeCompare(
-              String(b)
-            )
-      );
-
-
-    const racks =
-      [
-        ...new Set(
-          rows
-            .map(
-              row =>
-                row.rack
-            )
-            .filter(
-              Boolean
-            )
-        )
-      ]
-      .sort(
-        (a,b) =>
-          String(a)
-            .localeCompare(
-              String(b)
-            )
-      );
-
-
-    const statuses =
-      [
-        ...new Set(
-          rows
-            .map(
-              row =>
-                row.status
-            )
-            .filter(
-              Boolean
-            )
-        )
-      ]
-      .sort(
-        (a,b) =>
-          String(a)
-            .localeCompare(
-              String(b)
-            )
-      );
-
-
-    addOptions(
-      gradeFilter,
-      grades
+  button.textContent =
+    cleanViewName(
+      name
     );
 
-    addOptions(
-      rackFilter,
-      racks
+  button.title =
+    cleanViewName(
+      name
     );
 
-    addOptions(
-      statusFilter,
-      statuses
-    );
-
-  }
-
-
-  /*
-  ============================================================
-  FILTER CONTROLS
-  ============================================================
-  */
-
-  filterButton.addEventListener(
+  button.addEventListener(
     "click",
     function(){
 
-      filterPanel.classList.toggle(
+      activeView =
+        name;
+
+      sortKey =
+        null;
+
+      sortDirection =
+        1;
+
+      search.value =
+        "";
+
+      gradeFilter.value =
+        "";
+
+      rackFilter.value =
+        "";
+
+      statusFilter.value =
+        "";
+
+      moreWrap.classList.remove(
         "open"
       );
 
-      filterButton.classList.toggle(
-        "active",
-        filterPanel.classList.contains(
-          "open"
-        )
-      );
-
-    }
-  );
-
-
-  function clearFilters(
-    shouldRender = true
-  ){
-
-    gradeFilter.value =
-      "";
-
-    rackFilter.value =
-      "";
-
-    statusFilter.value =
-      "";
-
-
-    if(
-      shouldRender
-    ){
+      buildViews();
 
       render();
 
     }
-
-  }
-
-
-  clearFilter.addEventListener(
-    "click",
-    function(){
-
-      clearFilters();
-
-    }
   );
 
+  return button;
 
-  search.addEventListener(
-    "input",
-    render
-  );
+}
 
 
-  gradeFilter.addEventListener(
-    "change",
-    render
-  );
+function buildViews(){
+
+  viewScroll.innerHTML =
+    "";
+
+  moreMenu.innerHTML =
+    "";
 
 
-  rackFilter.addEventListener(
-    "change",
-    render
-  );
-
-
-  statusFilter.addEventListener(
-    "change",
-    render
-  );
+  const views =
+    Array.isArray(
+      DATA.views
+    )
+      ? DATA.views
+      : ["Master"];
 
 
   /*
-  ============================================================
-  VIEW FILTER
-  ============================================================
-  */
+   * Seven visible views.
+   * Everything else goes into more...
+   */
 
-  function getVisibleRows(){
+  const visible =
+    views.slice(
+      0,
+      7
+    );
 
-    let rows;
+  const hidden =
+    views.slice(
+      7
+    );
 
+
+  visible.forEach(
+    function(name){
+
+      viewScroll.appendChild(
+        makeViewButton(
+          name
+        )
+      );
+
+    }
+  );
+
+
+  hidden.forEach(
+    function(name){
+
+      moreMenu.appendChild(
+        makeViewButton(
+          name
+        )
+      );
+
+    }
+  );
+
+
+  if(
+    hidden.length
+  ){
+
+    moreButton.style.display =
+      "inline-flex";
+
+    moreButton.textContent =
+      `${hidden.length} more...`;
+
+  }else{
+
+    moreButton.style.display =
+      "none";
+
+  }
+
+}
+
+
+/* ---------------------------------------------------------
+   MORE
+   --------------------------------------------------------- */
+
+moreButton.addEventListener(
+  "click",
+  function(event){
+
+    event.stopPropagation();
+
+    moreWrap.classList.toggle(
+      "open"
+    );
+
+  }
+);
+
+
+document.addEventListener(
+  "click",
+  function(event){
 
     if(
-      activeView ===
-      "Master"
+      !moreWrap.contains(
+        event.target
+      )
     ){
 
-      rows =
-        DATA.rows.slice();
-
-    }else{
-
-      rows =
-        DATA.rows.filter(
-          function(row){
-
-            return (
-              row.material ===
-              activeView
-            );
-
-          }
-        );
+      moreWrap.classList.remove(
+        "open"
+      );
 
     }
 
-
-    const query =
-      search.value
-        .trim()
-        .toLowerCase();
+  }
+);
 
 
-    const selectedGrade =
-      gradeFilter.value;
+/* ---------------------------------------------------------
+   FILTERS
+   --------------------------------------------------------- */
+
+function populateSelect(
+  select,
+  values
+){
+
+  values.forEach(
+    function(value){
+
+      if(
+        value === null ||
+        value === undefined ||
+        value === ""
+      ){
+        return;
+      }
+
+      const option =
+        document.createElement(
+          "option"
+        );
+
+      option.value =
+        value;
+
+      option.textContent =
+        value;
+
+      select.appendChild(
+        option
+      );
+
+    }
+  );
+
+}
 
 
-    const selectedRack =
-      rackFilter.value;
+function buildFilters(){
+
+  const rows =
+    DATA.rows;
 
 
-    const selectedStatus =
-      statusFilter.value;
+  const grades =
+    [
+      ...new Set(
+        rows
+          .map(
+            r => r.grade
+          )
+          .filter(Boolean)
+      )
+    ]
+    .sort();
 
+
+  const racks =
+    [
+      ...new Set(
+        rows
+          .map(
+            r => r.rack
+          )
+          .filter(Boolean)
+      )
+    ]
+    .sort();
+
+
+  const statuses =
+    [
+      ...new Set(
+        rows
+          .map(
+            r => r.status
+          )
+          .filter(Boolean)
+      )
+    ]
+    .sort();
+
+
+  populateSelect(
+    gradeFilter,
+    grades
+  );
+
+  populateSelect(
+    rackFilter,
+    racks
+  );
+
+  populateSelect(
+    statusFilter,
+    statuses
+  );
+
+}
+
+
+filterButton.addEventListener(
+  "click",
+  function(){
+
+    filterPanel.classList.toggle(
+      "open"
+    );
+
+    filterButton.classList.toggle(
+      "active"
+    );
+
+  }
+);
+
+
+clearFilter.addEventListener(
+  "click",
+  function(){
+
+    gradeFilter.value = "";
+    rackFilter.value = "";
+    statusFilter.value = "";
+
+    render();
+
+  }
+);
+
+
+search.addEventListener(
+  "input",
+  render
+);
+
+gradeFilter.addEventListener(
+  "change",
+  render
+);
+
+rackFilter.addEventListener(
+  "change",
+  render
+);
+
+statusFilter.addEventListener(
+  "change",
+  render
+);
+
+
+/* ---------------------------------------------------------
+   FILTER DATA
+   --------------------------------------------------------- */
+
+function getRows(){
+
+  let rows;
+
+
+  if(
+    activeView ===
+    "Master"
+  ){
 
     rows =
-      rows.filter(
+      DATA.rows.slice();
+
+  }else{
+
+    rows =
+      DATA.rows.filter(
         function(row){
 
-          const searchable =
-            [
-              row.piece_id,
-              row.grade,
-              row.rack,
-              row.status,
-              row.material,
-              row.thickness,
-              row.width,
-              row.length
-            ]
-              .join(" ")
-              .toLowerCase();
-
-
-          if(
-            query &&
-            !searchable.includes(
-              query
+          return (
+            cleanViewName(
+              row.material
+            ) ===
+            cleanViewName(
+              activeView
             )
-          ){
-
-            return false;
-
-          }
-
-
-          if(
-            selectedGrade &&
-            row.grade !==
-            selectedGrade
-          ){
-
-            return false;
-
-          }
-
-
-          if(
-            selectedRack &&
-            row.rack !==
-            selectedRack
-          ){
-
-            return false;
-
-          }
-
-
-          if(
-            selectedStatus &&
-            row.status !==
-            selectedStatus
-          ){
-
-            return false;
-
-          }
-
-
-          return true;
+          );
 
         }
       );
 
+  }
+
+
+  const query =
+    search.value
+      .trim()
+      .toLowerCase();
+
+
+  return rows.filter(
+    function(row){
+
+      const searchable =
+        [
+          row.piece_id,
+          row.material,
+          row.grade,
+          row.rack,
+          row.status,
+          row.thickness,
+          row.width,
+          row.length
+        ]
+        .join(" ")
+        .toLowerCase();
+
+
+      if(
+        query &&
+        !searchable.includes(
+          query
+        )
+      ){
+
+        return false;
+
+      }
+
+
+      if(
+        gradeFilter.value &&
+        row.grade !==
+        gradeFilter.value
+      ){
+
+        return false;
+
+      }
+
+
+      if(
+        rackFilter.value &&
+        row.rack !==
+        rackFilter.value
+      ){
+
+        return false;
+
+      }
+
+
+      if(
+        statusFilter.value &&
+        row.status !==
+        statusFilter.value
+      ){
+
+        return false;
+
+      }
+
+
+      return true;
+
+    }
+  );
+
+}
+
+
+/* ---------------------------------------------------------
+   SORT
+   --------------------------------------------------------- */
+
+function sortRows(rows){
+
+  if(
+    !sortKey
+  ){
 
     return rows;
 
   }
 
 
-  /*
-  ============================================================
-  SORT
-  ============================================================
-  */
+  return [
+    ...rows
+  ].sort(
+    function(a,b){
 
-  function sortRows(
-    rows
-  ){
+      const av =
+        a[sortKey];
 
-    if(
-      !sortKey
-    ){
-
-      return rows;
-
-    }
+      const bv =
+        b[sortKey];
 
 
-    return [
-      ...rows
-    ].sort(
-      function(a,b){
+      const an =
+        Number(av);
 
-        const aValue =
-          a[sortKey];
-
-        const bValue =
-          b[sortKey];
+      const bn =
+        Number(bv);
 
 
-        const aNumber =
-          Number(
-            aValue
-          );
+      if(
+        Number.isFinite(an) &&
+        Number.isFinite(bn)
+      ){
 
-        const bNumber =
-          Number(
-            bValue
-          );
-
-
-        if(
-          Number.isFinite(
-            aNumber
-          ) &&
-          Number.isFinite(
-            bNumber
-          )
-        ){
-
-          return (
-            aNumber -
-            bNumber
-          ) *
-          sortDirection;
-
-        }
-
-
-        return String(
-          aValue ?? ""
-        ).localeCompare(
-          String(
-            bValue ?? ""
-          )
+        return (
+          an - bn
         ) *
         sortDirection;
 
       }
-    );
-
-  }
 
 
-  /*
-  ============================================================
-  TABLE
-  ============================================================
-  */
-
-  function render(){
-
-    if(
-      !DATA
-    ){
-
-      return;
+      return String(
+        av ?? ""
+      ).localeCompare(
+        String(
+          bv ?? ""
+        )
+      ) *
+      sortDirection;
 
     }
+  );
+
+}
 
 
-    let rows =
-      getVisibleRows();
+/* ---------------------------------------------------------
+   RENDER
+   --------------------------------------------------------- */
 
+function render(){
 
-    rows =
-      sortRows(
-        rows
-      );
-
-
-    /*
-    ----------------------------------------------------------
-    TOTALS
-    ----------------------------------------------------------
-    */
-
-    const pcs =
-      rows.reduce(
-        function(total,row){
-
-          return (
-            total +
-            Number(
-              row.qty || 0
-            )
-          );
-
-        },
-        0
-      );
-
-
-    const cbm =
-      rows.reduce(
-        function(total,row){
-
-          let value =
-            Number(
-              row.cbm
-            );
-
-
-          if(
-            !Number.isFinite(
-              value
-            )
-          ){
-
-            value =
-              (
-                Number(
-                  row.thickness ||
-                  0
-                ) *
-                Number(
-                  row.width ||
-                  0
-                ) *
-                Number(
-                  row.length ||
-                  0
-                ) *
-                Number(
-                  row.qty ||
-                  0
-                )
-              ) /
-              1000000000;
-
-          }
-
-
-          return (
-            total +
-            value
-          );
-
-        },
-        0
-      );
-
-
-    /*
-    ----------------------------------------------------------
-    META
-    ----------------------------------------------------------
-    */
-
-    meta.textContent =
-      `${formatNumber(rows.length)} pieces shown · ${formatNumber(pcs)} pcs`;
-
-
-    viewName.textContent =
-      getAlias(
-        activeView
-      );
-
-
-    footPcs.textContent =
-      formatNumber(
-        pcs
-      );
-
-
-    footCbm.textContent =
-      formatCbm(
-        cbm
-      );
-
-
-    footLines.textContent =
-      formatNumber(
-        rows.length
-      );
-
-
-    /*
-    ----------------------------------------------------------
-    EMPTY
-    ----------------------------------------------------------
-    */
-
-    empty.style.display =
-      rows.length
-        ? "none"
-        : "block";
-
-
-    /*
-    ----------------------------------------------------------
-    TABLE BODY
-    ----------------------------------------------------------
-    */
-
-    tbody.innerHTML =
-      rows
-        .map(
-          function(row){
-
-            return `
-
-              <tr>
-
-                <td class="piece-id">
-                  ${escapeHTML(
-                    row.piece_id
-                  )}
-                </td>
-
-                <td>
-                  ${
-                    row.thickness ??
-                    "—"
-                  }
-                </td>
-
-                <td>
-                  ${
-                    row.width ??
-                    "—"
-                  }
-                </td>
-
-                <td>
-                  ${
-                    row.length ??
-                    "—"
-                  }
-                </td>
-
-                <td>
-
-                  ${
-                    row.grade
-                      ? `
-                        <span class="pill">
-                          ${escapeHTML(
-                            row.grade
-                          )}
-                        </span>
-                      `
-                      : "—"
-                  }
-
-                </td>
-
-                <td class="number">
-                  ${formatNumber(
-                    row.qty
-                  )}
-                </td>
-
-                <td>
-                  ${
-                    row.rack
-                      ? escapeHTML(
-                          row.rack
-                        )
-                      : "—"
-                  }
-                </td>
-
-                <td>
-
-                  ${
-                    row.status
-                      ? `
-                        <span class="pill">
-                          ${escapeHTML(
-                            row.status
-                          )}
-                        </span>
-                      `
-                      : "—"
-                  }
-
-                </td>
-
-              </tr>
-
-            `;
-
-          }
-        )
-        .join("");
-
+  if(!DATA){
+    return;
   }
 
 
-  /*
-  ============================================================
-  SORT HEADERS
-  ============================================================
-  */
-
-  document
-    .querySelectorAll(
-      "th[data-key]"
-    )
-    .forEach(
-      function(th){
-
-        th.addEventListener(
-          "click",
-          function(){
-
-            const key =
-              th.dataset.key;
+  let rows =
+    getRows();
 
 
-            if(
-              sortKey ===
-              key
-            ){
-
-              sortDirection *=
-                -1;
-
-            }else{
-
-              sortKey =
-                key;
-
-              sortDirection =
-                1;
-
-            }
+  rows =
+    sortRows(
+      rows
+    );
 
 
-            render();
+  const pcs =
+    rows.reduce(
+      function(sum,row){
 
-          }
+        return (
+          sum +
+          Number(
+            row.qty || 0
+          )
         );
+
+      },
+      0
+    );
+
+
+  const cbm =
+    rows.reduce(
+      function(sum,row){
+
+        return (
+          sum +
+          Number(
+            row.cbm || 0
+          )
+        );
+
+      },
+      0
+    );
+
+
+  meta.textContent =
+    `${formatNumber(rows.length)} pieces shown · ${formatNumber(pcs)} pcs`;
+
+
+  viewName.textContent =
+    cleanViewName(
+      activeView
+    );
+
+
+  footPcs.textContent =
+    formatNumber(
+      pcs
+    );
+
+  footCbm.textContent =
+    formatCbm(
+      cbm
+    );
+
+  footLines.textContent =
+    formatNumber(
+      rows.length
+    );
+
+
+  empty.style.display =
+    rows.length
+      ? "none"
+      : "block";
+
+
+  tbody.innerHTML =
+    rows.map(
+      function(row){
+
+        return `
+
+<tr>
+
+<td class="piece-id">
+${escapeHTML(row.piece_id)}
+</td>
+
+<td>
+${row.thickness ?? "—"}
+</td>
+
+<td>
+${row.width ?? "—"}
+</td>
+
+<td>
+${row.length ?? "—"}
+</td>
+
+<td>
+
+${
+  row.grade
+  ?
+  `<span class="pill">
+    ${escapeHTML(row.grade)}
+  </span>`
+  :
+  "—"
+}
+
+</td>
+
+<td class="number">
+${formatNumber(row.qty)}
+</td>
+
+<td>
+${
+  row.rack
+  ?
+  escapeHTML(row.rack)
+  :
+  "—"
+}
+</td>
+
+<td>
+
+${
+  row.status
+  ?
+  `<span class="pill">
+    ${escapeHTML(row.status)}
+  </span>`
+  :
+  "—"
+}
+
+</td>
+
+</tr>
+
+`;
+
+      }
+    )
+    .join("");
+
+}
+
+
+/* ---------------------------------------------------------
+   SORT HEADERS
+   --------------------------------------------------------- */
+
+document
+.querySelectorAll(
+  "th[data-key]"
+)
+.forEach(
+  function(th){
+
+    th.addEventListener(
+      "click",
+      function(){
+
+        const key =
+          th.dataset.key;
+
+
+        if(
+          sortKey ===
+          key
+        ){
+
+          sortDirection *=
+            -1;
+
+        }else{
+
+          sortKey =
+            key;
+
+          sortDirection =
+            1;
+
+        }
+
+
+        render();
 
       }
     );
 
-
-  /*
-  ============================================================
-  GRAIN CURSOR
-  ============================================================
-  */
-
-  const cursorDot =
-    document.getElementById(
-      "cursorDot"
-    );
-
-  const cursorRing =
-    document.getElementById(
-      "cursorRing"
-    );
+  }
+);
 
 
-  let mouseX =
-    window.innerWidth / 2;
+/* ---------------------------------------------------------
+   CURSOR
+   --------------------------------------------------------- */
 
-  let mouseY =
-    window.innerHeight / 2;
+const cursorDot =
+  document.getElementById(
+    "cursorDot"
+  );
 
-  let ringX =
-    mouseX;
-
-  let ringY =
-    mouseY;
-
-
-  window.addEventListener(
-    "pointermove",
-    function(event){
-
-      mouseX =
-        event.clientX;
-
-      mouseY =
-        event.clientY;
+const cursorRing =
+  document.getElementById(
+    "cursorRing"
+  );
 
 
-      cursorDot.style.left =
-        `${mouseX}px`;
+let mouseX =
+  innerWidth / 2;
 
-      cursorDot.style.top =
-        `${mouseY}px`;
+let mouseY =
+  innerHeight / 2;
+
+let ringX =
+  mouseX;
+
+let ringY =
+  mouseY;
 
 
-      const interactive =
+window.addEventListener(
+  "pointermove",
+  function(event){
+
+    mouseX =
+      event.clientX;
+
+    mouseY =
+      event.clientY;
+
+
+    cursorDot.style.left =
+      `${mouseX}px`;
+
+    cursorDot.style.top =
+      `${mouseY}px`;
+
+
+    document.body.classList.toggle(
+      "pointer-hover",
+      Boolean(
         event.target.closest(
           "button,a,input,select,th"
-        );
-
-
-      document.body.classList.toggle(
-        "pointer-hover",
-        Boolean(
-          interactive
         )
-      );
-
-    },
-    {
-      passive:true
-    }
-  );
-
-
-  function cursorLoop(){
-
-    ringX +=
-      (
-        mouseX -
-        ringX
-      ) *
-      .14;
-
-
-    ringY +=
-      (
-        mouseY -
-        ringY
-      ) *
-      .14;
-
-
-    cursorRing.style.left =
-      `${ringX}px`;
-
-    cursorRing.style.top =
-      `${ringY}px`;
-
-
-    requestAnimationFrame(
-      cursorLoop
+      )
     );
 
+  },
+  {
+    passive:true
   }
+);
 
 
-  cursorLoop();
+function cursorLoop(){
+
+  ringX +=
+    (
+      mouseX -
+      ringX
+    ) * .14;
+
+  ringY +=
+    (
+      mouseY -
+      ringY
+    ) * .14;
 
 
-  /*
-  ============================================================
-  START DATA APPLICATION
+  cursorRing.style.left =
+    `${ringX}px`;
 
-  material-pieces-data.js is asynchronous because it fetches
-  material-pieces.csv.
+  cursorRing.style.top =
+    `${ringY}px`;
 
-  We therefore listen for its custom ready event.
-  ============================================================
-  */
 
-  window.addEventListener(
-    "grain:material-data-ready",
-    initialize,
-    {
-      once:true
-    }
+  requestAnimationFrame(
+    cursorLoop
   );
 
+}
 
-  /*
-  If data was already loaded before this listener was attached,
-  initialize immediately.
-  */
 
-  if(
-    window.MATERIAL_PIECES_DATA &&
-    Array.isArray(
-      window.MATERIAL_PIECES_DATA.rows
-    )
-  ){
+cursorLoop();
 
-    initialize();
 
+/* ---------------------------------------------------------
+   DATA READY
+   --------------------------------------------------------- */
+
+window.addEventListener(
+  "grain:material-data-ready",
+  initialize,
+  {
+    once:true
   }
+);
 
+
+/*
+ * Handles the case where material-pieces-data.js
+ * finishes before this listener is attached.
+ */
+
+if(
+  window.MATERIAL_PIECES_DATA &&
+  Array.isArray(
+    window.MATERIAL_PIECES_DATA.rows
+  )
+){
+
+  initialize();
+
+}
 
 })();
 </script>
