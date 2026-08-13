@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Grain / Wright Inventory</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Inter:wght@400;500;600&display=swap');
+:root{--bg:#f7f7f4;--ink:#111;--muted:#8a8a84;--line:#deded8;--panel:#fff;--dark:#111}
+*{box-sizing:border-box} html{scroll-behavior:smooth} body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,Arial,sans-serif}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.035;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.6'/%3E%3C/svg%3E")}
+a{color:inherit;text-decoration:none} .wrap{max-width:1480px;margin:auto;padding:28px 38px 70px}
+nav{height:42px;display:flex;align-items:center;justify-content:space-between;margin-bottom:95px}
+.brand{font-size:13px;font-weight:600;letter-spacing:-.02em} .navright{font:11px "DM Mono",monospace;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}
+.hero{max-width:1080px;margin-bottom:72px} .kicker{font:11px "DM Mono",monospace;text-transform:uppercase;color:var(--muted);letter-spacing:.12em;margin-bottom:18px}
+.hero h1{font-size:clamp(64px,9.2vw,150px);line-height:.94;letter-spacing:-.055em;font-weight:500;margin:0}
+.hero p{max-width:500px;margin:30px 0 0;font-size:15px;line-height:1.6;color:#666}
+.metrics{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--ink);border-bottom:1px solid var(--line);margin-bottom:80px}
+.metric{padding:25px 18px 28px 0;border-right:1px solid var(--line)} .metric:not(:first-child){padding-left:24px} .metric:last-child{border-right:0}
+.metric .label{font:10px "DM Mono",monospace;color:var(--muted);text-transform:uppercase;letter-spacing:.1em} .metric .value{font-size:42px;letter-spacing:-.06em;margin-top:14px}
+.section{margin-top:80px} .sectionhead{display:flex;justify-content:space-between;align-items:end;border-bottom:1px solid var(--ink);padding-bottom:12px;margin-bottom:24px}
+.sectionhead h2{font-size:30px;letter-spacing:-.055em;font-weight:500;margin:0} .index{font:10px "DM Mono",monospace;color:var(--muted)}
+.split{display:grid;grid-template-columns:minmax(0,1.08fr) minmax(0,.92fr);gap:90px}
+.rows{display:flex;flex-direction:column} .row{display:grid;grid-template-columns:minmax(0,1fr) 88px 135px 135px;gap:15px;align-items:center;padding:14px 0;border-bottom:1px solid var(--line);font-size:13px}
+.row .mono{font:11px "DM Mono",monospace;text-align:right} .barwrap{height:3px;background:#e5e5df;margin-top:8px} .barfill{height:100%;background:#111}
+.bigstat{font-size:clamp(50px,5.7vw,92px);letter-spacing:-.075em;line-height:.95;margin:20px 0 35px;white-space:nowrap}
+.note{font-size:13px;line-height:1.65;color:#70706a;max-width:480px}
+.filterbar{display:flex;justify-content:space-between;gap:15px;margin-bottom:18px}
+input,select{border:0;border-bottom:1px solid #aaa;background:transparent;border-radius:0;padding:10px 0;font:11px "DM Mono",monospace;outline:0}
+input{width:280px} select{width:160px}
+.table{border-top:1px solid var(--ink)} .thead,.trow{display:grid;grid-template-columns:2fr .7fr .7fr .7fr;gap:15px;padding:13px 10px;border-bottom:1px solid var(--line);font-size:12px}
+.thead{font:10px "DM Mono",monospace;color:var(--muted);text-transform:uppercase} .trow:hover{background:#eee}
+.right{text-align:right} .mono{font-family:"DM Mono",monospace}
+.footer{display:flex;justify-content:space-between;margin-top:90px;padding-top:18px;border-top:1px solid var(--line);font:10px "DM Mono",monospace;color:var(--muted);text-transform:uppercase}
+@media(max-width:800px){.wrap{padding:22px 20px 50px}nav{margin-bottom:60px}.metrics{grid-template-columns:1fr 1fr}.metric{border-bottom:1px solid var(--line)}.split{grid-template-columns:1fr;gap:55px}.row{grid-template-columns:minmax(0,1fr) 78px 115px 125px}.thead,.trow{grid-template-columns:1.6fr .7fr .7fr}.thead span:last-child,.trow span:last-child{display:none}input{width:180px}}
+
+.cursor-dot,.cursor-ring{position:fixed;pointer-events:none;z-index:9999;transform:translate(-50%,-50%)}
+.cursor-dot{width:5px;height:5px;background:#111;border-radius:50%}
+.cursor-ring{width:28px;height:28px;border:1px solid #1118;border-radius:50%;transition:width .18s ease,height .18s ease,border-color .18s ease,background .18s ease}
+body.pointer-hover .cursor-ring{width:46px;height:46px;background:#11108;border-color:#111}
+@media(max-width:800px){.cursor-dot,.cursor-ring{display:none}}
+
+@media(max-width:1180px) and (min-width:801px){
+ .split{grid-template-columns:minmax(480px,1fr) minmax(470px,1fr);gap:70px}
+ .bigstat{font-size:clamp(46px,5vw,76px)}
+}
+
+#valuationRows{width:100%;min-width:0}
+#valuationRows .row{width:100%;min-width:0}
+#valuationRows .mono{white-space:nowrap}
+</style>
+</head>
+<body>
+<div class="cursor-dot" id="cursorDot"></div><div class="cursor-ring" id="cursorRing"></div>
+<div class="wrap">
+<nav>
+<div class="brand">grain / wright</div>
+<div style="display:flex;align-items:center;gap:18px">
+<a href="https://app.notion.com/p/3b2587ac8c7880c58f18cab26e5d7d14?v=3b2587ac8c7880a09c54000c3e883df6&source=copy_link" target="_blank" rel="noopener" class="navright" style="border-bottom:1px solid #111;padding-bottom:4px;color:#111">master database ↗</a>
+<div class="navright">inventory · 13.08.26</div>
+</div>
+</nav>
+
+<section class="hero">
+<div class="kicker">Wright Operations System / Material Intelligence</div>
+<h1>current material<br>inventory.</h1>
+<p>Physical stock position by material, grade, form and volume.</p>
+</section>
+
+<section class="metrics">
+<div class="metric"><div class="label">Current quantity</div><div class="value" id="qty">—</div></div>
+<div class="metric"><div class="label">Physical volume</div><div class="value" id="cbm">—</div></div>
+<div class="metric"><div class="label">Inventory lines</div><div class="value" id="lines">—</div></div>
+<div class="metric"><div class="label">Material groups</div><div class="value" id="groups">—</div></div>
+</section>
+
+<section class="section">
+<div class="sectionhead"><h2>grade × form</h2><div class="index">01 / inventory structure</div></div>
+<div class="split">
+<div class="rows" id="combo"></div>
+<div>
+<div class="kicker">volume concentration</div>
+<div class="bigstat" id="bshare">—%</div>
+<div class="note">B Grade accounts for the majority of the current physical volume. Unclassified material is intentionally kept separate rather than being inferred into AAA or B.</div>
+</div>
+</div>
+</section>
+
+<section class="section">
+<div class="sectionhead"><h2>material mix</h2><div class="index">02 / physical volume</div></div>
+<div class="split">
+<div class="rows" id="grades"></div>
+<div class="rows" id="forms"></div>
+</div>
+</section>
+
+<section class="section">
+<div class="sectionhead"><h2>largest material pools</h2><div class="index">03 / cbm ranking</div></div>
+<div class="rows" id="materials"></div>
+</section>
+
+<section class="section">
+<div class="sectionhead"><h2>estimated inventory value</h2><div class="index">04 / valuation</div></div>
+<div class="split">
+<div>
+<div class="kicker">provisional value · supplied rates</div>
+<div class="bigstat" id="valuationTotal">—</div>
+<div class="note">Based only on stock matched to the supplied Grade A/B moulded and Grade B rough-sawn rates.</div>
+</div>
+<div class="rows" id="valuationRows"></div>
+</div>
+<div class="note" style="margin-top:22px"><b>Rate basis:</b> representative replacement benchmark less a 20% residual-lot discount for mixed dimensions, documentation uncertainty, condition variability and bulk-sale conditions.</div>
+</section>
+
+<section class="section">
+<div class="sectionhead"><h2>data logic</h2><div class="index">04 / methodology</div></div>
+<div class="split">
+<div class="note">CBM is calculated as <b>Thickness × Width × Length × Remaining Qty ÷ 1,000,000,000</b>. Only inventory pieces with Length ≥ 1,000 mm are included, following the current inventory calculation rule.</div>
+<div class="note">The original <b>CBM per Piece</b> field is not used for dashboard totals. Physical CBM is recalculated from Thickness × Width × Length × Remaining Qty.</div>
+</div>
+</section>
+
+<div class="footer"><span>grain interface / wright inventory</span><span>updated · 13 aug 2026 · 12:00</span></div>
+</div>
+
+<script>
+const DATA={"summary":{"qty":2486,"cbm":8.955318,"lines":1064,"includedRule":"Length ≥ 1000 mm","updated":"13 Aug 2026 · 12:00"},"combo":[{"grade":"B Grade","form":"Other","qty":741,"cbm":2.857646},{"grade":"B Grade","form":"Rough sawn","qty":506,"cbm":2.4127},{"grade":"AAA","form":"Moulded","qty":740,"cbm":2.338692},{"grade":"Unclassified","form":"Moulded","qty":277,"cbm":0.808658},{"grade":"B Grade","form":"Moulded","qty":213,"cbm":0.510923},{"grade":"Doreng","form":"Other","qty":9,"cbm":0.0267}],"grades":[{"name":"B Grade","qty":1460,"cbm":5.781269,"lines":659},{"name":"AAA","qty":740,"cbm":2.338692,"lines":340},{"name":"Unclassified","qty":277,"cbm":0.808658,"lines":63},{"name":"Doreng","qty":9,"cbm":0.0267,"lines":2}],"forms":[{"name":"Moulded","qty":1230,"cbm":3.658273,"lines":497},{"name":"Other","qty":750,"cbm":2.884346,"lines":113},{"name":"Rough sawn","qty":506,"cbm":2.4127,"lines":454}],"materials":[{"name":"20Thick Roughsawn","qty":314,"cbm":1.096127,"lines":293},{"name":"50 Width AAA Moulded","qty":348,"cbm":0.993105,"lines":88},{"name":"Prepared H Stock","qty":636,"cbm":0.97176,"lines":24},{"name":"Beam 10T up Relocation","qty":16,"cbm":0.892339,"lines":15},{"name":"60 Width AAA Moulded","qty":262,"cbm":0.842715,"lines":100},{"name":"70 Width AAA Moulded","qty":215,"cbm":0.807303,"lines":97},{"name":"40Thick Roughsawn","qty":100,"cbm":0.755223,"lines":91},{"name":"Beam 4T Relocation","qty":66,"cbm":0.723217,"lines":49},{"name":"30Thick Roughsawn","qty":58,"cbm":0.308188,"lines":56},{"name":"40 Width AAA Molded","qty":110,"cbm":0.228228,"lines":50},{"name":"20X70W B Moulded RL","qty":84,"cbm":0.202125,"lines":26},{"name":"Beam 3T Relocation","qty":17,"cbm":0.184708,"lines":17},{"name":"17X60W B Moulded RL","qty":76,"cbm":0.171258,"lines":28},{"name":"80 Width AAA Moulded","qty":46,"cbm":0.147276,"lines":35},{"name":"50Thick Roughsawn","qty":13,"cbm":0.144297,"lines":13},{"name":"180W  B Roughsawan","qty":21,"cbm":0.108864,"lines":1},{"name":"20x50 Moulded B relocation","qty":40,"cbm":0.10414,"lines":27},{"name":"Unclassified","qty":11,"cbm":0.087383,"lines":4},{"name":"100 up Width AAA Moulded","qty":15,"cbm":0.064435,"lines":13},{"name":"90 Width AAA Moulded","qty":14,"cbm":0.045767,"lines":13},{"name":"20Thick Rougsawn Relocation","qty":4,"cbm":0.024939,"lines":4},{"name":"20X40 Moulded B Relocation","qty":10,"cbm":0.023,"lines":10},{"name":"75 Iidth AAA Moulded","qty":6,"cbm":0.016541,"lines":6},{"name":"25Thick B Moulded","qty":3,"cbm":0.0104,"lines":3},{"name":"65 Width AAA Moulded","qty":1,"cbm":0.001979,"lines":1}],"valuation":[{"category":"Grade A — moulded","cbm":2.338692,"pcs":740,"rate":26000000,"value":60805999},{"category":"Grade B — moulded","cbm":0.510923,"pcs":213,"rate":22640000,"value":11567297},{"category":"Grade B — rough sawn","cbm":2.4127,"pcs":506,"rate":16000000,"value":38603197}],"valuationTotal":110976493,"valuationCBM":5.262315};
+const fmt=n=>new Intl.NumberFormat('en-US').format(n);
+document.getElementById('qty').textContent=fmt(DATA.summary.qty);
+document.getElementById('cbm').textContent=DATA.summary.cbm.toFixed(3);
+document.getElementById('lines').textContent=fmt(DATA.summary.lines);
+document.getElementById('groups').textContent=fmt(DATA.materials.length);
+
+const totalCBM=DATA.summary.cbm;
+const combo=document.getElementById('combo');
+DATA.combo
+ .filter(x=>x.qty>0)
+ .sort((a,b)=>b.cbm-a.cbm)
+ .forEach(x=>{
+   const p=totalCBM?x.cbm/totalCBM*100:0;
+   combo.innerHTML+=`<div class="row"><div><b>${x.grade}</b> · ${x.form}<div class="barwrap"><div class="barfill" style="width:${p}%"></div></div></div><div class="mono">${fmt(x.qty)} pcs</div><div class="mono">${x.cbm.toFixed(3)} cbm</div></div>`;
+ });
+
+const b=(DATA.grades.find(x=>x.name==="B Grade")||{cbm:0}).cbm;
+document.getElementById('bshare').textContent=(b/totalCBM*100).toFixed(1)+'%';
+
+const money=n=>new Intl.NumberFormat('en-US',{maximumFractionDigits:0}).format(n);
+document.getElementById('valuationTotal').textContent='Rp '+money(DATA.valuationTotal);
+const vr=document.getElementById('valuationRows');
+DATA.valuation.forEach(x=>{
+  vr.innerHTML+=`<div class="row"><div><b>${x.category}</b><div class="barwrap"><div class="barfill" style="width:${DATA.valuationCBM?x.cbm/DATA.valuationCBM*100:0}%"></div></div></div><div class="mono">${x.cbm.toFixed(3)} cbm</div><div class="mono">Rp ${money(x.rate)} / m³</div><div class="mono">Rp ${money(x.value)}</div></div>`;
+});
+function renderRows(el,data,max){
+ const node=document.getElementById(el); const m=max||Math.max(...data.map(x=>x.cbm),1);
+ data.sort((a,b)=>b.cbm-a.cbm).forEach(x=>{
+   const p=x.cbm/m*100;
+   node.innerHTML+=`<div class="row"><div><b>${x.name}</b><div class="barwrap"><div class="barfill" style="width:${p}%"></div></div></div><div class="mono">${fmt(x.qty)} pcs</div><div class="mono">${x.cbm.toFixed(3)} cbm</div></div>`;
+ });
+}
+renderRows('grades',DATA.grades);
+renderRows('forms',DATA.forms);
+renderRows('materials',DATA.materials,Math.max(...DATA.materials.map(x=>x.cbm)));
+
+const cursorDot=document.getElementById("cursorDot"), cursorRing=document.getElementById("cursorRing");
+let mx=0,my=0,rx=0,ry=0;
+window.addEventListener("pointermove",e=>{
+ mx=e.clientX; my=e.clientY;
+ cursorDot.style.left=mx+"px"; cursorDot.style.top=my+"px";
+ document.body.classList.toggle("pointer-hover",!!e.target.closest("a,button,input,select"));
+});
+(function cursorLoop(){rx+=(mx-rx)*.16;ry+=(my-ry)*.16;cursorRing.style.left=rx+"px";cursorRing.style.top=ry+"px";requestAnimationFrame(cursorLoop)})();
+</script>
+</body>
+</html>
