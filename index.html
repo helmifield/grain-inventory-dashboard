@@ -48,6 +48,10 @@ body.pointer-hover .cursor-ring{width:46px;height:46px;background:#11108;border-
 #valuationRows{width:100%;min-width:0}
 #valuationRows .row{width:100%;min-width:0}
 #valuationRows .mono{white-space:nowrap}
+
+.db-button{display:inline-flex;align-items:center;gap:8px;padding:9px 13px;border:1px solid #111;border-radius:999px;background:#111;color:#fff!important;font:10px "DM Mono",monospace;text-transform:uppercase;letter-spacing:.08em;transition:transform .18s ease,background .18s ease,color .18s ease}
+.db-button:hover{background:transparent;color:#111!important;transform:translateY(-1px)}
+.db-button span{font-size:12px;line-height:1}
 </style>
 </head>
 <body>
@@ -56,7 +60,7 @@ body.pointer-hover .cursor-ring{width:46px;height:46px;background:#11108;border-
 <nav>
 <div class="brand">grain / wright</div>
 <div style="display:flex;align-items:center;gap:18px">
-<a href="https://app.notion.com/p/3b2587ac8c7880c58f18cab26e5d7d14?v=3b2587ac8c7880a09c54000c3e883df6&source=copy_link" target="_blank" rel="noopener" class="navright" style="border-bottom:1px solid #111;padding-bottom:4px;color:#111">master database ↗</a>
+<a href="material-pieces.html" class="db-button" aria-label="Open Material Database">view material database <span>↗</span></a>
 <div class="navright">inventory · 13.08.26</div>
 </div>
 </nav>
