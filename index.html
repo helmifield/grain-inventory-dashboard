@@ -309,7 +309,7 @@ const DATA={"summary":{"qty":2486,"cbm":8.955318,"lines":1064,"includedRule":"Le
   }
 ],
 "valuationTotal":109627652,
-"valuationCBM":5.262315
+"valuationCBM":5.262315};
 const fmt=n=>new Intl.NumberFormat('en-US').format(n);
 document.getElementById('qty').textContent=fmt(DATA.summary.qty);
 document.getElementById('cbm').textContent=DATA.summary.cbm.toFixed(3);
@@ -331,6 +331,13 @@ document.getElementById('bshare').textContent=(b/totalCBM*100).toFixed(1)+'%';
 
 const money=n=>new Intl.NumberFormat('en-US',{maximumFractionDigits:0}).format(n);
 document.getElementById('valuationTotal').textContent='Rp '+money(DATA.valuationTotal);
+
+const valuationCoverage=document.getElementById('valuationCoverage');
+if(valuationCoverage){
+  const coverage=DATA.summary.cbm ? (DATA.valuationCBM/DATA.summary.cbm*100) : 0;
+  valuationCoverage.textContent=DATA.valuationCBM.toFixed(3)+' m³ of '+DATA.summary.cbm.toFixed(3)+' m³ ('+coverage.toFixed(1)+'%)';
+}
+
 const vr=document.getElementById('valuationRows');
 DATA.valuation.forEach(x=>{
   vr.innerHTML+=`<div class="row"><div><b>${x.category}</b><div class="barwrap"><div class="barfill" style="width:${DATA.valuationCBM?x.cbm/DATA.valuationCBM*100:0}%"></div></div></div><div class="mono">${x.cbm.toFixed(3)} cbm</div><div class="mono">Rp ${money(x.rate)} / m³</div><div class="mono">Rp ${money(x.value)}</div></div>`;
