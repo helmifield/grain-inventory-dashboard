@@ -84,6 +84,56 @@ body.pointer-hover .cursor-ring{width:46px;height:46px;background:#11108;border-
   font-size:12px;
   line-height:1;
 }
+
+/* =========================================================
+   VALUATION — CLASSIFIED STOCK
+   ========================================================= */
+
+.valuation-method{
+  margin-top:28px;
+  padding-top:24px;
+  border-top:1px solid var(--line);
+}
+
+.method-grid{
+  display:grid;
+  grid-template-columns:
+    repeat(4,minmax(0,1fr));
+  gap:30px;
+}
+
+.valuation-disclaimer{
+  margin-top:24px;
+  padding-top:18px;
+
+  border-top:1px solid var(--line);
+
+  max-width:900px;
+
+  color:var(--muted);
+  font-size:11px;
+  line-height:1.65;
+}
+
+@media(max-width:1180px){
+
+  .method-grid{
+    grid-template-columns:
+      repeat(2,minmax(0,1fr));
+  }
+
+}
+
+@media(max-width:800px){
+
+  .method-grid{
+    grid-template-columns:1fr;
+    gap:20px;
+  }
+
+}
+
+ 
 </style>
 </head>
 <body>
@@ -235,7 +285,31 @@ body.pointer-hover .cursor-ring{width:46px;height:46px;background:#11108;border-
 </div>
 
 <script>
-const DATA={"summary":{"qty":2486,"cbm":8.955318,"lines":1064,"includedRule":"Length ≥ 1000 mm","updated":"13 Aug 2026 · 12:00"},"combo":[{"grade":"B Grade","form":"Other","qty":741,"cbm":2.857646},{"grade":"B Grade","form":"Rough sawn","qty":506,"cbm":2.4127},{"grade":"AAA","form":"Moulded","qty":740,"cbm":2.338692},{"grade":"Unclassified","form":"Moulded","qty":277,"cbm":0.808658},{"grade":"B Grade","form":"Moulded","qty":213,"cbm":0.510923},{"grade":"Doreng","form":"Other","qty":9,"cbm":0.0267}],"grades":[{"name":"B Grade","qty":1460,"cbm":5.781269,"lines":659},{"name":"AAA","qty":740,"cbm":2.338692,"lines":340},{"name":"Unclassified","qty":277,"cbm":0.808658,"lines":63},{"name":"Doreng","qty":9,"cbm":0.0267,"lines":2}],"forms":[{"name":"Moulded","qty":1230,"cbm":3.658273,"lines":497},{"name":"Other","qty":750,"cbm":2.884346,"lines":113},{"name":"Rough sawn","qty":506,"cbm":2.4127,"lines":454}],"materials":[{"name":"20Thick Roughsawn","qty":314,"cbm":1.096127,"lines":293},{"name":"50 Width AAA Moulded","qty":348,"cbm":0.993105,"lines":88},{"name":"Prepared H Stock","qty":636,"cbm":0.97176,"lines":24},{"name":"Beam 10T up Relocation","qty":16,"cbm":0.892339,"lines":15},{"name":"60 Width AAA Moulded","qty":262,"cbm":0.842715,"lines":100},{"name":"70 Width AAA Moulded","qty":215,"cbm":0.807303,"lines":97},{"name":"40Thick Roughsawn","qty":100,"cbm":0.755223,"lines":91},{"name":"Beam 4T Relocation","qty":66,"cbm":0.723217,"lines":49},{"name":"30Thick Roughsawn","qty":58,"cbm":0.308188,"lines":56},{"name":"40 Width AAA Molded","qty":110,"cbm":0.228228,"lines":50},{"name":"20X70W B Moulded RL","qty":84,"cbm":0.202125,"lines":26},{"name":"Beam 3T Relocation","qty":17,"cbm":0.184708,"lines":17},{"name":"17X60W B Moulded RL","qty":76,"cbm":0.171258,"lines":28},{"name":"80 Width AAA Moulded","qty":46,"cbm":0.147276,"lines":35},{"name":"50Thick Roughsawn","qty":13,"cbm":0.144297,"lines":13},{"name":"180W  B Roughsawan","qty":21,"cbm":0.108864,"lines":1},{"name":"20x50 Moulded B relocation","qty":40,"cbm":0.10414,"lines":27},{"name":"Unclassified","qty":11,"cbm":0.087383,"lines":4},{"name":"100 up Width AAA Moulded","qty":15,"cbm":0.064435,"lines":13},{"name":"90 Width AAA Moulded","qty":14,"cbm":0.045767,"lines":13},{"name":"20Thick Rougsawn Relocation","qty":4,"cbm":0.024939,"lines":4},{"name":"20X40 Moulded B Relocation","qty":10,"cbm":0.023,"lines":10},{"name":"75 Iidth AAA Moulded","qty":6,"cbm":0.016541,"lines":6},{"name":"25Thick B Moulded","qty":3,"cbm":0.0104,"lines":3},{"name":"65 Width AAA Moulded","qty":1,"cbm":0.001979,"lines":1}],"valuation":[{"category":"Grade A — moulded","cbm":2.338692,"pcs":740,"rate":26000000,"value":60805999},{"category":"Grade B — moulded","cbm":0.510923,"pcs":213,"rate":22640000,"value":11567297},{"category":"Grade B — rough sawn","cbm":2.4127,"pcs":506,"rate":16000000,"value":38603197}],"valuationTotal":110976493,"valuationCBM":5.262315};
+const DATA={"summary":{"qty":2486,"cbm":8.955318,"lines":1064,"includedRule":"Length ≥ 1000 mm","updated":"13 Aug 2026 · 12:00"},"combo":[{"grade":"B Grade","form":"Other","qty":741,"cbm":2.857646},{"grade":"B Grade","form":"Rough sawn","qty":506,"cbm":2.4127},{"grade":"AAA","form":"Moulded","qty":740,"cbm":2.338692},{"grade":"Unclassified","form":"Moulded","qty":277,"cbm":0.808658},{"grade":"B Grade","form":"Moulded","qty":213,"cbm":0.510923},{"grade":"Doreng","form":"Other","qty":9,"cbm":0.0267}],"grades":[{"name":"B Grade","qty":1460,"cbm":5.781269,"lines":659},{"name":"AAA","qty":740,"cbm":2.338692,"lines":340},{"name":"Unclassified","qty":277,"cbm":0.808658,"lines":63},{"name":"Doreng","qty":9,"cbm":0.0267,"lines":2}],"forms":[{"name":"Moulded","qty":1230,"cbm":3.658273,"lines":497},{"name":"Other","qty":750,"cbm":2.884346,"lines":113},{"name":"Rough sawn","qty":506,"cbm":2.4127,"lines":454}],"materials":[{"name":"20Thick Roughsawn","qty":314,"cbm":1.096127,"lines":293},{"name":"50 Width AAA Moulded","qty":348,"cbm":0.993105,"lines":88},{"name":"Prepared H Stock","qty":636,"cbm":0.97176,"lines":24},{"name":"Beam 10T up Relocation","qty":16,"cbm":0.892339,"lines":15},{"name":"60 Width AAA Moulded","qty":262,"cbm":0.842715,"lines":100},{"name":"70 Width AAA Moulded","qty":215,"cbm":0.807303,"lines":97},{"name":"40Thick Roughsawn","qty":100,"cbm":0.755223,"lines":91},{"name":"Beam 4T Relocation","qty":66,"cbm":0.723217,"lines":49},{"name":"30Thick Roughsawn","qty":58,"cbm":0.308188,"lines":56},{"name":"40 Width AAA Molded","qty":110,"cbm":0.228228,"lines":50},{"name":"20X70W B Moulded RL","qty":84,"cbm":0.202125,"lines":26},{"name":"Beam 3T Relocation","qty":17,"cbm":0.184708,"lines":17},{"name":"17X60W B Moulded RL","qty":76,"cbm":0.171258,"lines":28},{"name":"80 Width AAA Moulded","qty":46,"cbm":0.147276,"lines":35},{"name":"50Thick Roughsawn","qty":13,"cbm":0.144297,"lines":13},{"name":"180W  B Roughsawan","qty":21,"cbm":0.108864,"lines":1},{"name":"20x50 Moulded B relocation","qty":40,"cbm":0.10414,"lines":27},{"name":"Unclassified","qty":11,"cbm":0.087383,"lines":4},{"name":"100 up Width AAA Moulded","qty":15,"cbm":0.064435,"lines":13},{"name":"90 Width AAA Moulded","qty":14,"cbm":0.045767,"lines":13},{"name":"20Thick Rougsawn Relocation","qty":4,"cbm":0.024939,"lines":4},{"name":"20X40 Moulded B Relocation","qty":10,"cbm":0.023,"lines":10},{"name":"75 Iidth AAA Moulded","qty":6,"cbm":0.016541,"lines":6},{"name":"25Thick B Moulded","qty":3,"cbm":0.0104,"lines":3},{"name":"65 Width AAA Moulded","qty":1,"cbm":0.001979,"lines":1}],"valuation":[
+  {
+    "category":"Grade A — moulded",
+    "cbm":2.338692,
+    "pcs":740,
+    "rate":26000000,
+    "value":60805992
+  },
+  {
+    "category":"Grade B — moulded",
+    "cbm":0.510923,
+    "pcs":213,
+    "rate":20000000,
+    "value":10218460
+  },
+  {
+    "category":"Grade B — rough sawn",
+    "cbm":2.412700,
+    "pcs":506,
+    "rate":16000000,
+    "value":38603200
+  }
+],
+"valuationTotal":109627652,
+"valuationCBM":5.262315
 const fmt=n=>new Intl.NumberFormat('en-US').format(n);
 document.getElementById('qty').textContent=fmt(DATA.summary.qty);
 document.getElementById('cbm').textContent=DATA.summary.cbm.toFixed(3);
